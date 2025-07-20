@@ -1,3 +1,11 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "La troupe la MICIM",
+    description:
+        "Voici la partir concsacré à la troupe d'improvisation de Comédie Musicale",
+};
+
 export default function Troupe() {
     return (
         <div className="pages-container">

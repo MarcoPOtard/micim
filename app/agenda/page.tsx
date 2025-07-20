@@ -1,8 +1,15 @@
 import { Show } from "@/datas/IShowsData";
 import { showData } from "@/models/dataProcessing";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { CgChevronRight } from "react-icons/cg";
+
+export const metadata: Metadata = {
+    title: "L'agenda de la MICIM",
+    description:
+        "Vous trouverez ici l'agenda des prochaines représentation de la MICIM",
+};
 
 export default async function Agenda() {
     const showsDatas:Show[] = await showData();
