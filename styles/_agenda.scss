@@ -1,0 +1,106 @@
+@use "./colors";
+
+.agenda-container {
+    margin-top: 3rem;
+
+    h1,
+    p {
+        padding: 1rem;
+
+        @media screen and (min-width: 640px) {
+            margin: 0 2rem;
+        }
+        @media screen and (min-width: 1024px) {
+            max-width: min(90%, 73rem);
+            margin: 0 auto;
+        }
+    
+    }
+}
+
+.agenda__section-container {
+    padding: 1rem 0;
+
+    @media screen and (min-width: 640px) {
+        margin: 0 2rem;
+    }
+    @media screen and (min-width: 1024px) {
+        max-width: min(90%, 73rem);
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+}
+.agenda__show-container{
+    margin-bottom: 2rem;
+
+    @media screen and (min-width: 1024px) {
+        flex-basis: 45%;
+
+
+        &:nth-child(2n) {
+            margin-top: 5rem;
+        }
+    }
+}
+
+.agenda__show-hero {
+    width: 100%;
+    height: auto;
+}
+.agenda__show-content {
+    position: relative;
+    z-index: 1;
+    display: block;
+    margin: -2rem 1rem 0 1rem;
+    padding: 2rem;
+    text-align: center;
+    transition: all ease 0.2s;
+}
+.agenda__show-container {
+    &:nth-child(3n-1) {
+        .agenda__show-content {
+            background-color: colors.$primary;
+
+            &:hover {
+                background-color: colors.$color-micim-900;
+            }
+        }
+    }
+    &:nth-child(3n) {
+        .agenda__show-content {
+            background-color: colors.$secondary;
+
+            &:hover {
+                background-color: colors.$color-secondary-600;
+            }
+        }
+    }
+    &:nth-child(3n + 1) {
+        .agenda__show-content {
+            background-color: colors.$tertiary;
+
+            &:hover {
+                background-color: colors.$color-tertiary-500;
+            }
+        }
+    }
+}
+
+.agenda__show-title {
+    margin-top: 0;
+    color: colors.$white;
+}
+.agenda__show-informations {
+    color: colors.$color-micim-50;
+}
+.agenda__show-more {
+    position: absolute;
+    top: calc(50% - 1rem);
+    right: 1rem;
+    width: 2rem;
+    height: 2rem;
+}

@@ -1,0 +1,63 @@
+@use "./colors";
+
+.home-page__carousel-container {
+    padding: 4rem 2rem;
+    background-color: colors.$color-micim-980;
+
+    @media screen and (min-width: 640px) {
+        margin: 0 2rem;
+    }
+    @media screen and (min-width: 1024px) {
+        position: relative;
+        z-index: 1;
+        max-width: min(90%, 73rem);
+        margin: -12rem auto 0;
+        padding: 6rem;
+    }
+}
+
+.carousel-slider {
+    hr {
+        border: 0;
+        width: 5rem;
+        height: 2px;
+        background-color: colors.$color-micim-500;
+    }
+
+    @media screen and (min-width: 1064px) {
+        display: inline-flex !important;
+        flex-direction: row;
+        justify-content: center;
+        gap: 4rem;
+    }
+}
+.slick-dots li button:before,
+.slick-dots li.slick-active button:before {
+    font-size: 0.75rem;
+    color: colors.$color-micim-200 !important;
+}
+
+.carousel-slider__top,
+.carousel-slider__bottom {
+    @media screen and (min-width: 1064px) {
+        flex-basis: 50%;
+    }
+}
+.carousel-slider__top h3 {
+    @media screen and (min-width: 1064px) {
+        font-size: 3rem
+    }
+
+}
+.carousel-slider__cta {
+    display: block;
+    width: fit-content;
+    margin: 2rem 0;
+    padding: 0.4rem 1rem;
+    color: colors.$white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: 0;
+    border-radius: 0.275rem;
+    background-color: colors.$secondary;
+}

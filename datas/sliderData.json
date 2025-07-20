@@ -1,0 +1,25 @@
+{
+    "sliders": [
+        {
+            "title": "Bienvenue chez la MICIM",
+            "subtitle": "Qui sommes-nous ?",
+            "description": "La Micim est une troupe de Comédie Musicale Improvisée. Nous vous inventons, vous jouons, vous interpretons des comédies musicales pour votre plus grand plaisir.",
+            "ctaText": "Plus d'informations",
+            "ctaLink": "/troupe"
+        },
+        {
+            "title": "Le prochain spectacle",
+            "subtitle": "Comédie Musicale Improvisée",
+            "description": "Le samedi 4 octobre à 20h00 <br />Venez nous rejoindre afin de passez un bon moment en découvrant en même temps que vous cette comédie musicale inédite",
+            "ctaText": "Plus d'informations",
+            "ctaLink": "/agenda/2025-10-04"
+        },
+        {
+            "title": "La TIPAIX",
+            "subtitle": "Section théâtre d'impro",
+            "description": "La Tipaix est la troupe de théâtre d'improvisation de l'association. Il y a des cours et des spectacles. Pour en savoir plus, allez donc faire un petit tour sur leur site internet ;)",
+            "ctaText": "Plus d'informations",
+            "ctaLink": "https://www.tipaix.com"
+        }
+    ]
+}

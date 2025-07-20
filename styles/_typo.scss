@@ -1,0 +1,73 @@
+@use "./colors";
+
+:root {
+    --font-limelight: 'Limelight', sans-serif;
+    // font-size: 0.875rem;
+    font-weight: 400;
+}
+
+.limelight {
+    font-family: var(--font-limelight);
+}
+
+h1 {
+    font-size: 2rem;
+
+    @media screen and (min-width: 1024px) {
+        font-size: 3rem;
+    }
+}
+h2 {
+    margin: 2rem 0 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: colors.$color-micim-100;
+
+    @media screen and (min-width: 1024px) {
+        font-size: 2rem;
+    }
+}
+h3 {
+    margin: 1.5rem 0 1rem;
+    font-size: 1.175rem;
+    font-weight: 800;
+    color: colors.$color-micim-200;
+
+    @media screen and (min-width: 1024px) {
+        font-size: 1.5rem;
+    }
+}
+h4 {
+    margin: 1rem 0 0.75rem;
+    font-size: 1.175rem;
+    font-weight: 300;
+    color: colors.$tertiary;
+
+    @media screen and (min-width: 1024px) {
+        font-size: 1.5rem;
+    }
+}
+p {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+
+    @media screen and (min-width: 1024px) {
+        font-size: 1.175rem;
+    }
+}
+ul {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+li {
+    padding-bottom: 0.5rem;
+    font-size: 1rem;
+
+    @media screen and (min-width: 1024px) {
+        font-size: 1.175rem;
+    }
+}
+
+strong {
+    color: colors.$color-tertiary-200;
+}
