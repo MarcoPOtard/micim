@@ -17,8 +17,19 @@ const limelight = Limelight({
 });
 
 export const metadata: Metadata = {
-    title: "MICIM",
-    description: "Troupe de Comédie Musicale Improvisée",
+    robots: {
+        index: false,
+        follow: false,
+        nocache: false,
+        googleBot: {
+            index: false,
+            follow: false,
+            noimageindex: false,
+            "max-video-preview": -1,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+        },
+    },
 };
 
 export default function RootLayout({
@@ -31,9 +42,7 @@ export default function RootLayout({
             <body className="">
                 <div className="main__container">
                     <Header />
-                    <main className="main-page__container">
-                        {children}
-                    </main>
+                    <main className="main-page__container">{children}</main>
                     <Footer />
                 </div>
             </body>

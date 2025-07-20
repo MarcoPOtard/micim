@@ -1,3 +1,11 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "L'association la MICIM",
+    description:
+        "La MICIM est aussi une associtation, retrouver ici les informations la concernant",
+};
+
 export default function Association() {
     return (
         <div className="pages-container">

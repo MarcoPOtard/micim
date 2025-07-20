@@ -4,7 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { CgChevronRight } from "react-icons/cg";
 import { promises as fs } from "fs";
+import { Metadata } from "next";
 
+export const metadata: Metadata = {
+    title: 'MICIM - Troupe de Comédie Musicale Improvisée',
+    description: 'MICIM est une troupe d\'Aix-en-Provence qui met en scène des Comédies Musicales Improvisées. Ni vous, ni nous ne savons ce qu\'il va se passer car tout est improvisé.',
+  }
+  
 export default async function Home() {
     const shows = await displayShows(2);
     const file = await fs.readFile(
