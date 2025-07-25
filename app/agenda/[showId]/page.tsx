@@ -1,5 +1,5 @@
 import { Show } from "@/datas/IShowsData";
-import { showData } from "@/models/dataProcessing";
+import { showData } from "@/utils/dataProcessing";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";

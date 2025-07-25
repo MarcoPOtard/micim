@@ -1,5 +1,5 @@
 import Carousel from "@/components/Carousel";
-import { displayShows } from "@/models/dataProcessing";
+import { displayShows } from "@/utils/dataProcessing";
 import Image from "next/image";
 import Link from "next/link";
 import { CgChevronRight } from "react-icons/cg";
