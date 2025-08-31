@@ -1,5 +1,6 @@
 @use "./colors";
 @use "./typo";
+@use "./buttons";
 @use "./header";
 @use "./footer";
 @use "./home";
@@ -7,6 +8,7 @@
 @use "./agenda";
 @use "./show";
 @use "./pages";
+@use "./contact";
 
 html,
 body {

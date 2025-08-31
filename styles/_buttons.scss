@@ -1,0 +1,19 @@
+@use "./colors";
+
+.button-secondary {
+    display: block;
+    width: fit-content;
+    margin: 2rem auto;
+    padding: .4rem 1rem;
+    color: colors.$white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: 0;
+    border-radius: 0.275rem;
+    background-color: colors.$secondary;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}

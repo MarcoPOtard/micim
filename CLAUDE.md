@@ -1,0 +1,1 @@
+- This project uses Next.js, HTML5, SCSS with custom css, Typescript, react-hook-form

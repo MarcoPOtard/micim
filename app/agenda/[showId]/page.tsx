@@ -3,31 +3,48 @@ import { showData } from "@/utils/dataProcessing";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { sanitizeHtml } from "@/utils/sanitizeHtml";
+import { notFound } from "next/navigation";
 
 type Props = {
-    params: Promise<{ id: string }>;
+    params: Promise<{ showId: string }>;
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export async function generateMetadata({
     params,
-}: Props): // parent: ResolvingMetadata
-Promise<Metadata> {
-    // read route params
-    const { id } = await params;
+}: Props): Promise<Metadata> {
+    try {
+        // read route params
+        const { showId } = await params;
 
-    // fetch data
-    const product = await fetch(`https://.../${id}`).then((res) => res.json());
+        const baseUrl =
+            process.env.VERCEL_URL !== undefined
+                ? `https://${process.env.VERCEL_URL}`
+                : "http://localhost:3000";
 
-    // optionally access and extend (rather than replace) parent metadata
-    // const previousImages = (await parent).openGraph?.images || []
+        const res = await fetch(`${baseUrl}/api/shows/${showId}`, {
+            cache: "no-store",
+        });
 
-    return {
-        title: product.title,
-        //   openGraph: {
-        //     images: ['/some-specific-page-image.jpg', ...previousImages],
-        //   },
-    };
+        if (!res.ok) {
+            console.error(`❌ Failed to fetch show ${showId}:`, res.statusText);
+            return { title: "Show not found" };
+        }
+
+        const show = await res.json();
+
+        return {
+            title: show.title || "Show Details",
+            description: show.description ? show.description.substring(0, 160) : "Détails du spectacle MICIM",
+        };
+    } catch (error) {
+        console.error("Error in generateMetadata:", error);
+        return { 
+            title: "Show not found",
+            description: "Le spectacle demandé n'a pas pu être trouvé."
+        };
+    }
 }
 
 export default async function ShowDetails({
@@ -42,8 +59,7 @@ export default async function ShowDetails({
     );
 
     if (!show) {
-        console.log("Aucun évènement trouvé avec cette id");
-        return;
+        notFound();
     }
 
     return (
@@ -70,15 +86,15 @@ export default async function ShowDetails({
                 </p>
                 <p
                     className="show-description"
-                    dangerouslySetInnerHTML={{ __html: show.description }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeHtml(show.description) }}
                 />
                 {show.link ? (
-                    <Link className="show-cta" href={show.link} target="_blank">
+                    <Link className="button-secondary" href={show.link} target="_blank">
                         Acheter votre billet
                     </Link>
                 ) : (
                     <button
-                        className="show-cta"
+                        className="button-secondary"
                         disabled={true}
                         title="Pas encore disponnible"
                     >
