@@ -2,7 +2,7 @@
 
 interface StructuredDataProps {
   type: 'organization' | 'event' | 'webpage'
-  data: any
+  data: Record<string, unknown>
 }
 
 export function StructuredData({ type, data }: StructuredDataProps) {

@@ -3,7 +3,7 @@
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      script: any;
+      script: React.DetailedHTMLProps<React.ScriptHTMLAttributes<HTMLScriptElement>, HTMLScriptElement>;
     }
   }
 }
