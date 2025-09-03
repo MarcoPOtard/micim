@@ -1,8 +1,23 @@
 'use client'
 
+interface EventData {
+  name?: string;
+  description?: string;
+  startDate?: string;
+  endDate?: string;
+  locationName?: string;
+  locationAddress?: string;
+  city?: string;
+  image?: string;
+  url?: string;
+  offers?: {
+    url: string;
+  };
+}
+
 interface StructuredDataProps {
   type: 'organization' | 'event' | 'webpage'
-  data: Record<string, unknown>
+  data: Record<string, unknown> | EventData
 }
 
 export function StructuredData({ type, data }: StructuredDataProps) {
@@ -37,10 +52,44 @@ export function StructuredData({ type, data }: StructuredDataProps) {
         }
       
       case 'event':
+        const eventData = data as EventData;
         return {
           ...baseData,
           '@type': 'TheaterEvent',
-          ...data
+          name: eventData.name,
+          description: eventData.description,
+          startDate: eventData.startDate,
+          endDate: eventData.endDate,
+          eventStatus: 'https://schema.org/EventScheduled',
+          eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+          location: {
+            '@type': 'Place',
+            name: eventData.locationName,
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: eventData.locationAddress,
+              addressLocality: eventData.city,
+              addressCountry: 'FR'
+            }
+          },
+          organizer: {
+            '@type': 'TheaterGroup',
+            name: 'MICIM',
+            url: 'https://micim.fr'
+          },
+          performer: {
+            '@type': 'TheaterGroup',
+            name: 'MICIM',
+            url: 'https://micim.fr'
+          },
+          image: eventData.image,
+          url: eventData.url,
+          offers: eventData.offers ? {
+            '@type': 'Offer',
+            url: eventData.offers.url,
+            availability: 'https://schema.org/InStock',
+            validFrom: new Date().toISOString()
+          } : undefined
         }
 
       case 'webpage':

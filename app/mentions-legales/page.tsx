@@ -65,7 +65,7 @@ const LegalNotices = () => {
             <h3>Responsable de traitement</h3>
             <p>
                 Le responsable de traitement des données personnelles collectées sur ce site est l&apos;association MICIM,
-                représentée par ses membres du bureau.
+                représentée par Sébastien Chombard et Marc Potard..
                 <br />
                 Contact : micim@micim.fr
             </p>
@@ -125,7 +125,7 @@ const LegalNotices = () => {
                 <br />
                 CNIL - 3 Place de Fontenoy - TSA 80715 - 75334 PARIS CEDEX 07
                 <br />
-                Téléphone : 01 53 73 22 22 - Site web : <a href="https://www.cnil.fr">www.cnil.fr</a>
+                Téléphone : 01 53 73 22 22 - Site web : <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">www.cnil.fr</a>
             </p>
 
             <h3>Cookies et technologies de suivi</h3>
@@ -134,6 +134,9 @@ const LegalNotices = () => {
                 <br />
                 Seuls des cookies techniques nécessaires au bon fonctionnement du site peuvent être utilisés.
             </p>
+
+            <hr />
+            <p>Site réalisé par <a href="https://www.marcpotard.com" target="_blank" rel="noopener noreferrer">Marc Potard</a></p>
         </div>
     );
 };

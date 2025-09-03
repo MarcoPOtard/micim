@@ -38,6 +38,7 @@ export default function Carousel({ sliderData }: { sliderData: CarouselData }) {
                             <Link
                                 href={data.ctaLink}
                                 className="carousel-slider__cta"
+                                {...(data.ctaLink.startsWith('http') && { target: "_blank", rel: "noopener noreferrer" })}
                             >
                                 {data.ctaText}
                             </Link>

@@ -6,6 +6,8 @@ import Link from "next/link";
 import { sanitizeHtml } from "@/utils/sanitizeHtml";
 import { notFound } from "next/navigation";
 import { getImageDimensions } from "@/utils/imageUtils";
+import { StructuredData } from "@/components/StructuredData";
+import { generateEventStructuredData } from "@/utils/eventUtils";
 
 type Props = {
     params: Promise<{ showId: string }>;
@@ -35,9 +37,74 @@ export async function generateMetadata({
 
         const show = await res.json();
 
+        // Nettoyer la description HTML pour la meta description
+        const cleanDescription = show.description 
+            ? show.description.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ').trim()
+            : "Spectacle de comédie musicale improvisée par la troupe MICIM";
+        
+        const truncatedDescription = cleanDescription.length > 160 
+            ? cleanDescription.substring(0, 157) + "..."
+            : cleanDescription;
+
+        const showUrl = `https://micim.fr/agenda/${showId}`;
+        const imageUrl = show.image ? `https://micim.fr${show.image}` : 'https://micim.fr/images/og-image.jpg';
+
         return {
-            title: show.title || "Show Details",
-            description: show.description ? show.description.substring(0, 160) : "Détails du spectacle MICIM",
+            title: show.title,
+            description: truncatedDescription,
+            keywords: [
+                show.title,
+                'MICIM',
+                'comédie musicale improvisée',
+                'spectacle',
+                show.city || 'Aix-en-Provence',
+                'théâtre',
+                'improvisation',
+                'événement'
+            ],
+            authors: [{ name: 'MICIM' }],
+            creator: 'MICIM',
+            publisher: 'MICIM',
+            openGraph: {
+                type: 'article',
+                locale: 'fr_FR',
+                url: showUrl,
+                siteName: 'MICIM',
+                title: `${show.title} - MICIM`,
+                description: truncatedDescription,
+                images: [{
+                    url: imageUrl,
+                    width: 1200,
+                    height: 630,
+                    alt: show.title,
+                    type: 'image/jpeg'
+                }],
+                publishedTime: new Date().toISOString(),
+                section: 'Spectacles'
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title: `${show.title} - MICIM`,
+                description: truncatedDescription,
+                images: [imageUrl],
+                creator: '@micim'
+            },
+            robots: {
+                index: true,
+                follow: true,
+                nocache: true,
+                googleBot: {
+                    index: true,
+                    follow: true,
+                    noimageindex: true,
+                    "max-video-preview": -1,
+                    "max-image-preview": "large",
+                    "max-snippet": -1,
+                },
+            },
+            alternates: {
+                canonical: showUrl
+            }
         };
     } catch (error) {
         console.error("Error in generateMetadata:", error);
@@ -65,9 +132,12 @@ export default async function ShowDetails({
 
     const heroDimensions = getImageDimensions(show.image);
     const posterDimensions = getImageDimensions(show.poster);
+    const eventData = generateEventStructuredData(show);
 
     return (
-        <div className="show-container">
+        <>
+            <StructuredData type="event" data={eventData} />
+            <div className="show-container">
             <Image
                 src={show.image}
                 alt={show.title}
@@ -99,7 +169,7 @@ export default async function ShowDetails({
                     dangerouslySetInnerHTML={{ __html: sanitizeHtml(show.description) }}
                 />
                 {show.link && (
-                    <Link className="button-secondary" href={show.link} target="_blank">
+                    <Link className="button-secondary" href={show.link} target="_blank" rel="noopener noreferrer">
                         Acheter votre billet
                     </Link>
                 )}
@@ -111,5 +181,6 @@ export default async function ShowDetails({
                 </p>
             </div>
         </div>
+        </>
     );
 }
