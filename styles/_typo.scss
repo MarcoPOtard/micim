@@ -71,3 +71,10 @@ li {
 strong {
     color: colors.$color-tertiary-200;
 }
+.link {
+    text-decoration: underline;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
