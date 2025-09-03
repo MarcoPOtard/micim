@@ -1,9 +1,14 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "L'association la MICIM",
-    description:
-        "La MICIM est aussi une associtation, retrouver ici les informations la concernant",
+    title: "L'association MICIM",
+    description: "Découvrez l'association MICIM : La Malicieuse et Intenable Compagnie d'Impro Musicale. Notre vocation, nos ateliers et notre philosophie artistique.",
+    keywords: ['association MICIM', 'compagnie improvisation musicale', 'ateliers théâtre', 'formation impro', 'association artistique'],
+    openGraph: {
+        title: "L'association MICIM - Compagnie d'Improvisation Musicale",
+        description: "La MICIM réunit des passionnés de théâtre d'improvisation et de comédie musicale improvisée à Aix-en-Provence.",
+        images: ['/images/og-image.jpg'],
+    }
 };
 
 export default function Association() {

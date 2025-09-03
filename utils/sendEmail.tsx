@@ -11,6 +11,7 @@ export const sendEmail = async (data: FormData): Promise<{ success: boolean; mes
                 firstname: data.firstname,
                 lastname: data.lastname,
                 email: data.email,
+                subject: data.subject,
                 message: data.message,
             }),
         });

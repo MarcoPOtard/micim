@@ -6,9 +6,14 @@ import Link from "next/link";
 import { CgChevronRight } from "react-icons/cg";
 
 export const metadata: Metadata = {
-    title: "L'agenda de la MICIM",
-    description:
-        "Vous trouverez ici l'agenda des prochaines représentation de la MICIM",
+    title: "Agenda des spectacles",
+    description: "Découvrez tous les prochains spectacles de comédie musicale improvisée de la troupe MICIM. Réservez vos places pour nos représentations à Aix-en-Provence.",
+    keywords: ['agenda spectacles MICIM', 'prochaines représentations', 'spectacles Aix-en-Provence', 'réservation comédie musicale', 'calendrier événements'],
+    openGraph: {
+        title: "Agenda des spectacles MICIM - Prochaines représentations",
+        description: "Ne manquez aucun de nos spectacles ! Consultez l'agenda complet de la troupe MICIM et réservez vos places.",
+        images: ['/images/og-image.jpg'],
+    }
 };
 
 export default async function Agenda() {
@@ -32,7 +37,7 @@ export default async function Agenda() {
                                 className="agenda__show-container"
                             >
                                 <Image
-                                    src={`/images/${show.image}`}
+                                    src={show.image}
                                     alt={show.title}
                                     width={640}
                                     height={380}

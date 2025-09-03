@@ -2,9 +2,14 @@ import { ContactForm } from "@/components/ContactForm";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Contactez la MICIM",
-    description:
-        "La MICIM est aussi une associtation, retrouver ici les informations la concernant",
+    title: "Contactez-nous",
+    description: "Vous avez des questions sur nos spectacles ou souhaitez nous rejoindre ? Contactez la troupe MICIM via notre formulaire de contact.",
+    keywords: ['contact MICIM', 'formulaire contact', 'questions spectacles', 'rejoindre troupe', 'information comédie musicale'],
+    openGraph: {
+        title: "Contactez la troupe MICIM",
+        description: "Une question, une envie de nous rejoindre ? N'hésitez pas à nous contacter !",
+        images: ['/images/og-image.jpg'],
+    }
 };
 
 export default function Contact() {

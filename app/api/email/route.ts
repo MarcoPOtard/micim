@@ -3,10 +3,10 @@ import nodemailer from 'nodemailer';
 
 export async function POST(request: NextRequest) {
   try {
-    const { firstname, lastname, email, message } = await request.json();
+    const { firstname, lastname, email, subject, message } = await request.json();
 
     // Validation
-    if (!firstname || !lastname || !email || !message) {
+    if (!firstname || !lastname || !email || !subject || !message) {
       return NextResponse.json(
         { error: 'Tous les champs sont requis' },
         { status: 400 }
@@ -22,36 +22,53 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Configure nodemailer
+    // Configure nodemailer pour OVH MX Plan
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_SECURE === 'true',
+      host: process.env.SMTP_HOST || 'ssl0.ovh.net',
+      port: parseInt(process.env.SMTP_PORT || '465'),
+      secure: true, // true pour le port 465 (SSL), false pour 587 (TLS)
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
     });
 
+    // Date et heure actuelles
+    const now = new Date();
+    const dateTime = now.toLocaleString('fr-FR', {
+      timeZone: 'Europe/Paris',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+
     // Email content
     const mailOptions = {
       from: process.env.SMTP_FROM || 'micim@micim.fr',
       to: 'micim@micim.fr',
-      subject: `Nouveau message de contact - ${firstname} ${lastname}`,
+      subject: `${subject} - ${firstname} ${lastname} - Micim`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #72377b;">Nouveau message de contact</h2>
           <div style="background: #f5f5f5; padding: 20px; border-radius: 5px;">
             <p><strong>Nom :</strong> ${firstname} ${lastname}</p>
             <p><strong>Email :</strong> ${email}</p>
+            <p><strong>Sujet :</strong> ${subject}</p>
             <p><strong>Message :</strong></p>
             <div style="background: white; padding: 15px; border-radius: 3px; margin-top: 10px;">
               ${message.replace(/\n/g, '<br>')}
             </div>
           </div>
-          <p style="color: #666; font-size: 12px; margin-top: 20px;">
-            Message envoyé depuis le formulaire de contact du site MICIM
-          </p>
+          <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+          <div style="background: #f9f9f9; padding: 15px; border-radius: 3px; font-size: 12px; color: #666;">
+            <p><strong>Informations techniques :</strong></p>
+            <p>✅ L'expéditeur a donné son consentement explicite pour le traitement de ses données personnelles conformément à notre politique de confidentialité.</p>
+            <p><strong>Date et heure d'envoi :</strong> ${dateTime}</p>
+            <p><strong>Source :</strong> Formulaire de contact du site MICIM</p>
+          </div>
         </div>
       `,
       text: `
@@ -59,9 +76,16 @@ export async function POST(request: NextRequest) {
         
         Nom: ${firstname} ${lastname}
         Email: ${email}
+        Sujet: ${subject}
         
         Message:
         ${message}
+        
+        ---
+        Informations techniques :
+        - L'expéditeur a donné son consentement explicite pour le traitement de ses données personnelles.
+        - Date et heure d'envoi : ${dateTime}
+        - Source : Formulaire de contact du site MICIM
       `,
       replyTo: email,
     };

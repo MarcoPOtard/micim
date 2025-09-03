@@ -8,6 +8,7 @@ export type FormData = {
     firstname: string;
     lastname: string;
     email: string;
+    subject: string;
     message: string;
     consent: boolean;
 };
@@ -112,6 +113,25 @@ export const ContactForm = () => {
                 {errors.email && (
                     <span className="contact-form__error">
                         {errors.email.message}
+                    </span>
+                )}
+            </div>
+            <div className="contact-form__field">
+                <label htmlFor="subject" className="contact-form__label">
+                    Sujet <span className="contact-form__required">*</span> :
+                </label>
+                <input
+                    type="text"
+                    placeholder="Sujet de votre message"
+                    className="contact-form__input"
+                    id="subject"
+                    {...register("subject", {
+                        required: "Le sujet est requis",
+                    })}
+                />
+                {errors.subject && (
+                    <span className="contact-form__error">
+                        {errors.subject.message}
                     </span>
                 )}
             </div>

@@ -1,23 +1,26 @@
 import Carousel from "@/components/Carousel";
-import { displayShows } from "@/utils/dataProcessing";
+import { displayShows, showData } from "@/utils/dataProcessing";
+import { generateSliderDataWithNextShow } from "@/utils/nextShowUtils";
 import Image from "next/image";
 import Link from "next/link";
 import { CgChevronRight } from "react-icons/cg";
-import { promises as fs } from "fs";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: 'MICIM - Troupe de Comédie Musicale Improvisée',
+    title: 'Accueil',
     description: 'MICIM est une troupe d\'Aix-en-Provence qui met en scène des Comédies Musicales Improvisées. Ni vous, ni nous ne savons ce qu\'il va se passer car tout est improvisé.',
-  }
+    keywords: ['comédie musicale improvisée', 'improvisation théâtrale', 'spectacle Aix-en-Provence', 'troupe MICIM', 'théâtre musical'],
+    openGraph: {
+        title: 'MICIM - Troupe de Comédie Musicale Improvisée',
+        description: 'Découvrez nos spectacles uniques où tout est improvisé en direct. Comédie musicale improvisée à Aix-en-Provence.',
+        images: ['/images/og-image.jpg'],
+    }
+}
   
 export default async function Home() {
     const shows = await displayShows(2);
-    const file = await fs.readFile(
-        process.cwd() + "/datas/sliderData.json",
-        "utf8"
-    );
-    const sliderData = JSON.parse(file);
+    const allShows = await showData();
+    const sliderData = generateSliderDataWithNextShow(allShows);
 
     return (
         <>
@@ -53,7 +56,7 @@ export default async function Home() {
                         className="home-page__show-container"
                     >
                         <Image
-                            src={`/images/${show.image}`}
+                            src={show.image}
                             alt={show.title}
                             width={640}
                             height={380}

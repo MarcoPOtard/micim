@@ -1,41 +1,56 @@
 {
     "shows":[
         {
+            "id": "2025-09-27",
+            "title": "Match d'impro",
+            "date": "Samedi 27 septembre",
+            "shortDate": "27/09/2025",
+            "location": "Espace Ughetti, Route de Gardanne, Luynes, 13080 Aix-en-Provence",
+            "city": "Luynes",
+            "startingHour": "19h00",
+            "image": "/images/shows/tipaix/spectacle-1.jpeg",
+            "poster": "/images/shows/tipaix/spectacle-1.jpeg",
+            "description": "Une soirée d'improvisation théâtrale pleine de rires et de surprises. Venez découvrir l'art de l'impro avec Tipaix !"
+        },
+        {
             "id": "2025-10-04",
-            "title": "Comédie Musicale Improvisée 1",
+            "title": "Comédie Musicale Improvisée",
             "date": "Samedi 04 octobre 2025",
             "shortDate": "04/10/2025",
             "location": "Espace Ughetti, Route de Gardanne, Luynes, 13080 Aix-en-Provence",
             "city": "Luynes",
             "startingHour": "20h00",
-            "image": "visuel-comedie-musicale-1.png",
-            "poster": "affiche-comedie-musicale-h600.png",
+            "image": "/images/shows/micim/visuel-comedie-musicale-blanc.png",
+            "poster": "/images/shows/micim/affiche-comedie-musicale-blanc-h600.png",
             "description": "Que se passera-t-il lors de cette comédie musicale improvisée ? C&lsquo;est à vous d&lsquo;en décider, de nous donner les éléments qui nous permettrons de vous interpréter une comédie musicale complétement improvisée. <br />Alors n&lsquo;hésitez plus, venez nous voir.",
-            "link": "https://www.marcpotard.com"
+            "link": "https://www.helloasso.com/associations/micim/evenements/comedie-musicale-improvisee-4-octobre-2025"
         },
         {
-            "id": "2025-12-08",
-            "title": "Comédie Musicale Improvisée 3",
-            "date": "Samedi 8 décembre 2025",
-            "shortDate": "08/12/2025",
+            "id": "2025-11-15",
+            "title": "Comédie Musicale Improvisée",
+            "date": "Samedi 15 novembre",
+            "shortDate": "15/11/2025",
             "location": "Espace Ughetti, Route de Gardanne, Luynes, 13080 Aix-en-Provence",
             "city": "Luynes",
             "startingHour": "20h00",
-            "image": "visuel-comedie-musicale-1.png",
-            "poster": "affiche-comedie-musicale-h600.png",
-            "description": "Que se passera-t-il lors de cette comédie musicale improvisée ? C&lsquo;est à vous d&lsquo;en décider, de nous donner les éléments qui nous permettrons de vous interpréter une comédie musicale complétement improvisée. \nAlors n&lsquo;hésitez plus, venez nous voir."
+            "image": "/images/shows/micim/visuel-comedie-musicale-noir.png",
+            "poster": "/images/shows/micim/affiche-comedie-musicale-noir-h600.png",
+            "description": "Que se passera-t-il lors de cette nouvelle comédie musicale improvisée ? C&lsquo;est vous qui allez décider de nous donner des éléments qui nous permettrons de vous interpréter une nouvelle comédie musicale complétement improvisée complétement folle. \nAlors n&lsquo;hésitez plus, venez nous voir.",
+            "link": "https://www.helloasso.com/associations/micim/evenements/comedie-musicale-improvisee-16-novembre-2025"
         },
         {
-            "id": "2025-11-24",
-            "title": "Comédie Musicale Improvisée 2",
-            "date": "Samedi 24 novembre 2025",
-            "shortDate": "24/11/2025",
+            "id": "2025-12-06",
+            "title": "Match d'impro",
+            "date": "Samedi 12 décembre",
+            "shortDate": "06/12/2025",
             "location": "Espace Ughetti, Route de Gardanne, Luynes, 13080 Aix-en-Provence",
             "city": "Luynes",
-            "startingHour": "20h00",
-            "image": "visuel-comedie-musicale-1.png",
-            "poster": "affiche-comedie-musicale-h600.png",
-            "description": "Que se passera-t-il lors de cette comédie musicale improvisée ? C&lsquo;est à vous d&lsquo;en décider, de nous donner les éléments qui nous permettrons de vous interpréter une comédie musicale complétement improvisée. \nAlors n&lsquo;hésitez plus, venez nous voir."
+            "startingHour": "19h00",
+            "image": "/images/shows/tipaix/spectacle-3.jpeg",
+            "poster": "/images/shows/tipaix/spectacle-3.jpeg",
+            "description": "Un match d'improvisation théâtrale opposant Tipaix à une troupe invitée. Sport et théâtre réunis !",
+            "link": "#"
+
         }
     ]
 }

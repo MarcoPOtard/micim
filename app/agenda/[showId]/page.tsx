@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { sanitizeHtml } from "@/utils/sanitizeHtml";
 import { notFound } from "next/navigation";
+import { getImageDimensions } from "@/utils/imageUtils";
 
 type Props = {
     params: Promise<{ showId: string }>;
@@ -62,21 +63,30 @@ export default async function ShowDetails({
         notFound();
     }
 
+    const heroDimensions = getImageDimensions(show.image);
+    const posterDimensions = getImageDimensions(show.poster);
+
     return (
         <div className="show-container">
             <Image
-                src={`/images/${show.image}`}
+                src={show.image}
                 alt={show.title}
-                width={640}
-                height={380}
+                width={heroDimensions.width}
+                height={heroDimensions.height}
                 className="show-hero"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 600px"
+                style={{
+                    width: '100%',
+                    height: 'auto',
+                }}
             />
             <Image
-                src={`/images/${show.poster}`}
+                src={show.poster}
                 alt={show.title}
-                width={432}
-                height={600}
+                width={posterDimensions.width}
+                height={posterDimensions.height}
                 className="show-poster"
+                sizes="(max-width: 1024px) 0px, 50%"
             />
 
             <div className="show-content">
@@ -88,18 +98,10 @@ export default async function ShowDetails({
                     className="show-description"
                     dangerouslySetInnerHTML={{ __html: sanitizeHtml(show.description) }}
                 />
-                {show.link ? (
+                {show.link && (
                     <Link className="button-secondary" href={show.link} target="_blank">
                         Acheter votre billet
                     </Link>
-                ) : (
-                    <button
-                        className="button-secondary"
-                        disabled={true}
-                        title="Pas encore disponnible"
-                    >
-                        Acheter votre billet
-                    </button>
                 )}
                 <h3>Heure & Lieux</h3>
                 <p className="show-informations">
