@@ -69,7 +69,7 @@ const LegalNotices = () => {
             <p>
                 Le responsable de traitement des données personnelles collectées
                 sur ce site est l&apos;association MICIM, représentée par
-                Sébastien Chombard et Marc Potard..
+                Sébastien Chombart et Marc Potard.
                 <br />
                 Contact : micim@micim.fr
             </p>
