@@ -83,6 +83,7 @@ const LegalNotices = () => {
                 <li>Prénom et nom</li>
                 <li>Adresse e-mail</li>
                 <li>Message</li>
+                <li>Consentement à l'inscription newsletter (optionnel)</li>
             </ul>
 
             <h3>Base légale et finalité du traitement</h3>
@@ -91,17 +92,23 @@ const LegalNotices = () => {
                 consentement explicite, donné lors de la soumission du
                 formulaire de contact.
                 <br />
-                Les données sont uniquement utilisées pour répondre à votre
-                demande et assurer le suivi de nos échanges.
+                Les données sont utilisées pour :
             </p>
+            <ul>
+                <li>Répondre à votre demande et assurer le suivi de nos échanges</li>
+                <li>Vous envoyer notre newsletter si vous avez donné votre consentement (information sur nos spectacles et actualités)</li>
+            </ul>
 
             <h3>Durée de conservation</h3>
             <p>
-                Vos données personnelles sont conservées pendant une durée
-                maximale de 1 an à compter de votre dernier contact.
-                <br />
-                Passé ce délai, elles sont automatiquement supprimées de nos
-                systèmes.
+                Vos données personnelles sont conservées selon les finalités suivantes :
+            </p>
+            <ul>
+                <li><strong>Contact :</strong> 1 an maximum à compter de votre dernier contact</li>
+                <li><strong>Newsletter :</strong> Jusqu'à votre désinscription ou 3 ans d'inactivité maximum</li>
+            </ul>
+            <p>
+                Passé ces délais, vos données sont automatiquement supprimées de nos systèmes.
             </p>
 
             <h3>Destinataires des données</h3>
@@ -112,6 +119,18 @@ const LegalNotices = () => {
                 <br />
                 Aucune donnée n&apos;est transmise à des tiers ou à des
                 partenaires commerciaux.
+            </p>
+
+            <h3>Newsletter et désinscription</h3>
+            <p>
+                Si vous vous êtes inscrit(e) à notre newsletter, vous pouvez vous désinscrire à tout moment :
+            </p>
+            <ul>
+                <li>En cliquant sur le lien de désinscription présent dans chaque email</li>
+                <li>En nous contactant directement à l'adresse : micim@micim.fr</li>
+            </ul>
+            <p>
+                Votre désinscription sera effective immédiatement et vos données seront supprimées de notre liste de diffusion.
             </p>
 
             <h3>Vos droits</h3>
@@ -143,7 +162,7 @@ const LegalNotices = () => {
                 </li>
                 <li>
                     <strong>Droit de retrait du consentement :</strong> vous
-                    pouvez retirer votre consentement à tout moment
+                    pouvez retirer votre consentement à tout moment (notamment pour la newsletter)
                 </li>
             </ul>
             <p>

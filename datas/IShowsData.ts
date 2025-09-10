@@ -1,11 +1,11 @@
 export interface Show {
-    id: string;
+    id: string; // ID simple (ex: "1", "2", "3")
+    team: 'micim' | 'tipaix';
     title: string;
-    date: string;
-    shortDate: string;
+    date: string; // Format DD/MM/YYYY (ex: "04/10/2025")
     location: string;
     city: string;
-    startingHour: string;
+    startingHour: string; // Format HHhMM (ex: "20h00")
     image: string;
     poster: string;
     description: string;

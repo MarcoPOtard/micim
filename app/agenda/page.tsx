@@ -1,5 +1,6 @@
 import { Show } from "@/datas/IShowsData";
 import { showData } from "@/utils/dataProcessing";
+import { getFullDateDisplay } from "@/utils/dateUtils";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -43,6 +44,7 @@ export default async function Agenda() {
                                     height={380}
                                     className="agenda__show-hero"
                                 />
+                                <span className="agenda__show-team" style={{backgroundImage: `url(/logo/picto-${show.team}-96x96.png)`}}></span>
                                 <div>
                                     <Link
                                         className="agenda__show-content"
@@ -52,7 +54,7 @@ export default async function Agenda() {
                                             {show.title}
                                         </h3>
                                         <p className="agenda__show-informations">
-                                            {show.date}, {show.startingHour}
+                                            {getFullDateDisplay(show.date)}, {show.startingHour}
                                         </p>
                                         <CgChevronRight className="agenda__show-more" />
                                     </Link>

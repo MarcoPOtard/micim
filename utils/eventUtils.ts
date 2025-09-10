@@ -1,17 +1,9 @@
 import { Show } from "@/datas/IShowsData";
-
-// Convertit une date courte (DD/MM/YYYY) et une heure (HH:MM) en date ISO
-export const createEventDateTime = (shortDate: string, startingHour: string): string => {
-    const [day, month, year] = shortDate.split('/').map(Number);
-    const [hour, minute] = startingHour.replace('h', ':').split(':').map(Number);
-    
-    const date = new Date(year, month - 1, day, hour, minute || 0);
-    return date.toISOString();
-};
+import { getISODate } from "@/utils/dateUtils";
 
 // Génère les données structurées pour un événement spectacle
 export const generateEventStructuredData = (show: Show) => {
-    const startDateTime = createEventDateTime(show.shortDate, show.startingHour);
+    const startDateTime = getISODate(show);
     const endDateTime = new Date(new Date(startDateTime).getTime() + 2 * 60 * 60 * 1000).toISOString(); // +2h par défaut
     
     const cleanDescription = show.description 

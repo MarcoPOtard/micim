@@ -1,5 +1,6 @@
 import { Show } from "@/datas/IShowsData";
 import { showData } from "@/utils/dataProcessing";
+import { getFullDateDisplay } from "@/utils/dateUtils";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -162,7 +163,7 @@ export default async function ShowDetails({
             <div className="show-content">
                 <h1>{show?.title}</h1>
                 <p className="show-short-informations">
-                    {show.date} | {show.city}
+                    {getFullDateDisplay(show.date)} | {show.city}
                 </p>
                 <p
                     className="show-description"
@@ -175,7 +176,7 @@ export default async function ShowDetails({
                 )}
                 <h3>Heure & Lieux</h3>
                 <p className="show-informations">
-                    {show.date}, {show.startingHour}
+                    {getFullDateDisplay(show.date)}, {show.startingHour}
                     <br />
                     {show.location}
                 </p>

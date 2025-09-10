@@ -1,6 +1,7 @@
 import { Show } from "@/datas/IShowsData";
 import { promises as fs } from "fs";
 import { cache } from "@/lib/cache";
+import { isShowInFuture, compareShowsByDate } from "@/utils/dateUtils";
 
 export const showData = async (): Promise<Show[]> => {
     try {
@@ -26,36 +27,20 @@ export const showData = async (): Promise<Show[]> => {
             return [];
         }
 
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
         const filteredAndSortedShows = [...showsData.shows]
             .filter(show => {
                 try {
-                    if (!show.id) {
-                        console.error("Show missing ID:", show);
+                    if (!show.date) {
+                        console.error("Show missing date:", show);
                         return false;
                     }
-                    const showDate = new Date(show.id);
-                    if (isNaN(showDate.getTime())) {
-                        console.error("Invalid date for show:", show.id);
-                        return false;
-                    }
-                    showDate.setHours(0, 0, 0, 0);
-                    return showDate >= today;
+                    return isShowInFuture(show);
                 } catch (error) {
                     console.error("Error filtering show:", error);
                     return false;
                 }
             })
-            .sort((a, b) => {
-                try {
-                    return new Date(a.id).getTime() - new Date(b.id).getTime();
-                } catch (error) {
-                    console.error("Error sorting shows:", error);
-                    return 0;
-                }
-            });
+            .sort(compareShowsByDate);
         
         // Cache the result for 10 minutes
         cache.set(cacheKey, filteredAndSortedShows, 10);
@@ -76,6 +61,20 @@ export const displayShows = async (number: number): Promise<Show[]> => {
         return shows.slice(0, number);
     } catch (error) {
         console.error("Error in displayShows:", error);
+        return [];
+    }
+}
+
+export const displayMicimShows = async (number: number): Promise<Show[]> => {
+    try {
+        const shows: Show[] = await showData();
+        const micimShows = shows.filter(show => show.team === 'micim');
+
+        if (number === 0) return micimShows;
+
+        return micimShows.slice(0, number);
+    } catch (error) {
+        console.error("Error in displayMicimShows:", error);
         return [];
     }
 }

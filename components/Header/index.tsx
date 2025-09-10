@@ -85,15 +85,7 @@ const Header = () => {
                             onClick={() => setDisplayMenu(false)}
                             role="menuitem"
                         >
-                            L&lsquo;Asso
-                        </Link>
-                        <Link
-                            className="header__menu-navigation__link"
-                            href="/troupe"
-                            onClick={() => setDisplayMenu(false)}
-                            role="menuitem"
-                        >
-                            La troupe
+                            La Micim
                         </Link>
                         <Link
                             className="header__menu-navigation__link"

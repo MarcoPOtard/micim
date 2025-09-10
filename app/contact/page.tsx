@@ -20,7 +20,7 @@ export default function Contact() {
                 Vous souhaitez avoir des informations, vous avez des questions
                 ou vous souhaitez juste nous dire comment nous sommes géniaux ?
                 <br />
-                N&lsquo;hésitez pas, notre formulaire est là pour vous !
+                N&lsquo;hésitez pas, notre formulaire est là pour vous ! Vous pouvez également vous inscrire à notre newsletter pour être informé(e) de nos prochains spectacles.
             </p>
             <ContactForm />
         </div>

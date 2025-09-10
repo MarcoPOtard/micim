@@ -1,10 +1,10 @@
 {
     "shows":[
         {
-            "id": "2025-09-27",
+            "id": "1",
+            "team": "tipaix",
             "title": "Match d'impro ado",
-            "date": "Samedi 27 septembre",
-            "shortDate": "27/09/2025",
+            "date": "27/09/2025",
             "location": "Espace Ughetti, Route de Gardanne, Luynes, 13080 Aix-en-Provence",
             "city": "Luynes",
             "startingHour": "19h00",
@@ -13,10 +13,10 @@
             "description": "Une soirée d'improvisation théâtrale pleine de rires et de surprises. Venez découvrir l'art de l'impro avec Tipaix !"
         },
         {
-            "id": "2025-10-04",
+            "id": "2",
+            "team": "micim",
             "title": "Comédie Musicale Improvisée",
-            "date": "Samedi 04 octobre 2025",
-            "shortDate": "04/10/2025",
+            "date": "04/10/2025",
             "location": "Espace Ughetti, Route de Gardanne, Luynes, 13080 Aix-en-Provence",
             "city": "Luynes",
             "startingHour": "20h00",
@@ -26,10 +26,10 @@
             "link": "https://www.helloasso.com/associations/micim/evenements/comedie-musicale-improvisee-4-octobre-2025"
         },
         {
-            "id": "2025-11-15",
+            "id": "3",
+            "team": "micim",
             "title": "Comédie Musicale Improvisée",
-            "date": "Samedi 15 novembre",
-            "shortDate": "15/11/2025",
+            "date": "15/11/2025",
             "location": "Espace Ughetti, Route de Gardanne, Luynes, 13080 Aix-en-Provence",
             "city": "Luynes",
             "startingHour": "20h00",
@@ -39,10 +39,10 @@
             "link": "https://www.helloasso.com/associations/micim/evenements/comedie-musicale-improvisee-16-novembre-2025"
         },
         {
-            "id": "2025-12-06",
+            "id": "4",
+            "team": "tipaix",
             "title": "Match d'impro ado",
-            "date": "Samedi 12 décembre",
-            "shortDate": "06/12/2025",
+            "date": "06/12/2025",
             "location": "Espace Ughetti, Route de Gardanne, Luynes, 13080 Aix-en-Provence",
             "city": "Luynes",
             "startingHour": "19h00",
@@ -50,7 +50,6 @@
             "poster": "/images/shows/tipaix/spectacle-3.jpeg",
             "description": "Un match d'improvisation théâtrale opposant Tipaix à une troupe invitée. Sport et théâtre réunis !",
             "link": "#"
-
         }
     ]
 }

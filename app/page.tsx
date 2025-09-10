@@ -1,6 +1,6 @@
 import Carousel from "@/components/Carousel";
-import { displayShows, showData } from "@/utils/dataProcessing";
-import { generateSliderDataWithNextShow } from "@/utils/nextShowUtils";
+import { displayMicimShows } from "@/utils/dataProcessing";
+import { getFullDateDisplay } from "@/utils/dateUtils";
 import Image from "next/image";
 import Link from "next/link";
 import { CgChevronRight } from "react-icons/cg";
@@ -18,9 +18,26 @@ export const metadata: Metadata = {
 }
   
 export default async function Home() {
-    const shows = await displayShows(2);
-    const allShows = await showData();
-    const sliderData = generateSliderDataWithNextShow(allShows);
+    const shows = await displayMicimShows(2);
+    
+    const sliderData = {
+        sliders: [
+            {
+                "title": "Bienvenue chez la MICIM",
+                "subtitle": "Qui sommes-nous ?",
+                "description": "La Micim est une troupe de Comédie Musicale Improvisée. Nous vous inventons, vous jouons, vous interpretons des comédies musicales pour votre plus grand plaisir.",
+                "ctaText": "Plus d'informations",
+                "ctaLink": "/troupe"
+            },
+            {
+                "title": "La TIPAIX",
+                "subtitle": "Section théâtre d'impro",
+                "description": "La Tipaix est la troupe de théâtre d'improvisation de l'association. Il y a des cours et des spectacles. Pour en savoir plus, allez donc faire un petit tour sur leur site internet ;)",
+                "ctaText": "Plus d'informations",
+                "ctaLink": "https://www.tipaix.com"
+            }
+        ]
+    };
 
     return (
         <>
@@ -71,7 +88,7 @@ export default async function Home() {
                                     {show.title}
                                 </h3>
                                 <p className="home-page__show-informations">
-                                    {show.date}, {show.startingHour}
+                                    {getFullDateDisplay(show.date)}, {show.startingHour}
                                 </p>
                                 <CgChevronRight className="home-page__show-more" />
                             </Link>
