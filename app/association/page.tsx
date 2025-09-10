@@ -122,7 +122,7 @@ export default function Association() {
                 <br />
                 Nos deux troubadours s&apos;entourèrent d&apos;autres fous,
                 prêts à se lancer dans cette drôle d&apos;aventure. Des
-                comédiens improvisateurs talentueux qui ont chacun leurs
+                comédiens et comédiennes improvisateurs talentueux.ses qui ont chacun.e leurs
                 histoires, leur vécu, leurs expériences, leurs grains de folie,
                 parce qu&apos;il faut le reconnaître, il faut être un peu timbré
                 pour monter sur scène et improviser une comédie musicale entière
@@ -156,13 +156,13 @@ export default function Association() {
                 Et là encore, il en ressortit avec pleins de techniques, pleins
                 d&apos;informations, pleins de courage, plein d&apos;envie,
                 plein d&apos;idées, plein de motivation pour accompagner les
-                comédiens dans cette aventure.
+                comédiennes et les comédiens dans cette aventure.
             </p>
 
             <h2>Et c&apos;est ainsi</h2>
             <p>
-                Enfin, en cette nouvelle année, la Micim accueille de nouveaux
-                comédiens et musiciens afin de surprendre et de proposer des
+                Enfin, en cette nouvelle année, la Micim accueille de nouveaux.elles
+                comédiens.ennes et musiciens afin de surprendre et de proposer des
                 <strong>comédies musicales improvisées</strong> encore meilleures, plus
                 déjantées, plus drôles, plus dramatiques, plus surprenantes,
                 plus folles !!! 
