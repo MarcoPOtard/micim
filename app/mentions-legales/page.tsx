@@ -83,7 +83,7 @@ const LegalNotices = () => {
                 <li>Prénom et nom</li>
                 <li>Adresse e-mail</li>
                 <li>Message</li>
-                <li>Consentement à l'inscription newsletter (optionnel)</li>
+                <li>Consentement à l&apos;inscription newsletter (optionnel)</li>
             </ul>
 
             <h3>Base légale et finalité du traitement</h3>
@@ -105,7 +105,7 @@ const LegalNotices = () => {
             </p>
             <ul>
                 <li><strong>Contact :</strong> 1 an maximum à compter de votre dernier contact</li>
-                <li><strong>Newsletter :</strong> Jusqu'à votre désinscription ou 3 ans d'inactivité maximum</li>
+                <li><strong>Newsletter :</strong> Jusqu&apos;à votre désinscription ou 3 ans d&apos;inactivité maximum</li>
             </ul>
             <p>
                 Passé ces délais, vos données sont automatiquement supprimées de nos systèmes.
@@ -127,7 +127,7 @@ const LegalNotices = () => {
             </p>
             <ul>
                 <li>En cliquant sur le lien de désinscription présent dans chaque email</li>
-                <li>En nous contactant directement à l'adresse : micim@micim.fr</li>
+                <li>En nous contactant directement à l&apos;adresse : micim@micim.fr</li>
             </ul>
             <p>
                 Votre désinscription sera effective immédiatement et vos données seront supprimées de notre liste de diffusion.

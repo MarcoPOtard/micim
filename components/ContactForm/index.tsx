@@ -227,7 +227,7 @@ export const ContactForm = () => {
                 <h5>Utilisation de vos données</h5>
                 <p>
                     Les informations recueillies via ce formulaire sont
-                    transmises à MICIM pour répondre à votre demande. En cas d'inscription à la newsletter, votre adresse email sera conservée pour vous envoyer nos actualités. Vous pourrez vous désabonner à tout moment. Vos données sont conservées 1 an maximum et ne sont jamais transmises à des
+                    transmises à MICIM pour répondre à votre demande. En cas d&apos;inscription à la newsletter, votre adresse email sera conservée pour vous envoyer nos actualités. Vous pourrez vous désabonner à tout moment. Vos données sont conservées 1 an maximum et ne sont jamais transmises à des
                     tiers.
                 </p>
             </div>

@@ -87,7 +87,7 @@ export default function Association() {
                 </strong>
                 , lieu très sympathique, ayant une programmation de formation
                 autour de l&apos;improvisation théâtrale absolument géniale.
-                C'est grace à cet endroit qu&apos;ils purent suivre cette
+                C&apos;est grace à cet endroit qu&apos;ils purent suivre cette
                 formation.
                 <br />À la tête de cette{" "}
                 <strong>formation de comédie musicale improvisée</strong> se
@@ -175,7 +175,7 @@ export default function Association() {
                 Enfin presque tout...
                 </p>
                 <p>
-                Le reste de l'histoire se passe sur scène, c&apos;est pour cela
+                Le reste de l&apos;histoire se passe sur scène, c&apos;est pour cela
                 que vous n&apos;avez plus d&apos;autre choix que de venir voir
                 la Micim lors d&apos;une de ses prochaines représentations que
                 vous retrouverez dans notre <Link href="/agenda" className="link">agenda</Link>.
