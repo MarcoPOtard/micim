@@ -66,6 +66,7 @@ export const ContactForm = () => {
                     placeholder="Prénom"
                     className="contact-form__input"
                     id="firstname"
+                    inputMode="text"
                     {...register("firstname", {
                         required: "Le prénom est requis",
                     })}
@@ -85,6 +86,7 @@ export const ContactForm = () => {
                     placeholder="Nom"
                     className="contact-form__input"
                     id="lastname"
+                    inputMode="text"
                     {...register("lastname", { required: "Le nom est requis" })}
                 />
                 {errors.lastname && (
@@ -103,6 +105,7 @@ export const ContactForm = () => {
                     placeholder="example@domain.com"
                     className="contact-form__input"
                     id="email"
+                    inputMode="email"
                     {...register("email", {
                         required: "L'adresse email est requise",
                         pattern: {
@@ -126,6 +129,7 @@ export const ContactForm = () => {
                     placeholder="Sujet de votre message"
                     className="contact-form__input"
                     id="subject"
+                    inputMode="text"
                     {...register("subject", {
                         required: "Le sujet est requis",
                     })}
