@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 
 export async function POST(request: NextRequest) {
   try {
-    const { firstname, lastname, email, subject, message } = await request.json();
+    const { firstname, lastname, email, subject, message, newsletter } = await request.json();
 
     // Validation
     if (!firstname || !lastname || !email || !subject || !message) {
@@ -57,6 +57,7 @@ export async function POST(request: NextRequest) {
             <p><strong>Nom :</strong> ${firstname} ${lastname}</p>
             <p><strong>Email :</strong> ${email}</p>
             <p><strong>Sujet :</strong> ${subject}</p>
+            <p><strong>Newsletter :</strong> ${newsletter ? '✅ Souhaite recevoir la newsletter' : 'N\'a pas coché la case pour la newsletter'}</p>
             <p><strong>Message :</strong></p>
             <div style="background: white; padding: 15px; border-radius: 3px; margin-top: 10px;">
               ${message.replace(/\n/g, '<br>')}
@@ -77,6 +78,7 @@ export async function POST(request: NextRequest) {
         Nom: ${firstname} ${lastname}
         Email: ${email}
         Sujet: ${subject}
+        Newsletter: ${newsletter ? 'Souhaite recevoir la newsletter' : 'N\'a pas coché la case pour la newsletter'}
         
         Message:
         ${message}

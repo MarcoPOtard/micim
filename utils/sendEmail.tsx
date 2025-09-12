@@ -13,6 +13,7 @@ export const sendEmail = async (data: FormData): Promise<{ success: boolean; mes
                 email: data.email,
                 subject: data.subject,
                 message: data.message,
+                newsletter: data.newsletter,
             }),
         });
 
