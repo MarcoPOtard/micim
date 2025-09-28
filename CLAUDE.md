@@ -1,1 +1,5 @@
 - This project uses Next.js, HTML5, SCSS with custom css, Typescript, react-hook-form
+- Configuration existante :
+  - Next.js 15 avec TypeScript
+  - Configuration SMTP (nodemailer avec OVH)
+  - Cache en mémoire basique
