@@ -17,6 +17,9 @@ export const metadata: Metadata = {
     }
 };
 
+// Revalidate the page every 6 hours
+export const revalidate = 21600;
+
 export default async function Agenda() {
     const showsDatas:Show[] = await showData();
     // const shows = displayShows(showsDatas, 0);
