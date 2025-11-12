@@ -8,20 +8,28 @@ import { CgChevronRight } from "react-icons/cg";
 
 export const metadata: Metadata = {
     title: "Agenda des spectacles",
-    description: "Découvrez tous les prochains spectacles de comédie musicale improvisée de la troupe MICIM. Réservez vos places pour nos représentations à Aix-en-Provence.",
-    keywords: ['agenda spectacles MICIM', 'prochaines représentations', 'spectacles Aix-en-Provence', 'réservation comédie musicale', 'calendrier événements'],
+    description:
+        "Découvrez tous les prochains spectacles de comédie musicale improvisée de la troupe MICIM. Réservez vos places pour nos représentations à Aix-en-Provence.",
+    keywords: [
+        "agenda spectacles MICIM",
+        "prochaines représentations",
+        "spectacles Aix-en-Provence",
+        "réservation comédie musicale",
+        "calendrier événements",
+    ],
     openGraph: {
         title: "Agenda des spectacles MICIM - Prochaines représentations",
-        description: "Ne manquez aucun de nos spectacles ! Consultez l'agenda complet de la troupe MICIM et réservez vos places.",
-        images: ['/images/og-image.jpg'],
-    }
+        description:
+            "Ne manquez aucun de nos spectacles ! Consultez l'agenda complet de la troupe MICIM et réservez vos places.",
+        images: ["/images/og-image.jpg"],
+    },
 };
 
 // Revalidate the page every 6 hours
 export const revalidate = 21600;
 
 export default async function Agenda() {
-    const showsDatas:Show[] = await showData();
+    const showsDatas: Show[] = await showData();
     // const shows = displayShows(showsDatas, 0);
 
     return (
@@ -29,9 +37,12 @@ export default async function Agenda() {
             <div className="agenda-container">
                 <h1>Nos futurs spectacles</h1>
                 <p className="">
-                    Vous trouverez, dans cette section, tous <strong>les spectacles à
-                    venir de la troupe la Micim</strong>. N&lsquo;hésitez pas à revenir
-                    ici pour voir les nouvelles représentations prévues.
+                    Vous trouverez, dans cette section, tous{" "}
+                    <strong>
+                        les spectacles à venir de la troupe la Micim
+                    </strong>
+                    . N&lsquo;hésitez pas à revenir ici pour voir les nouvelles
+                    représentations prévues.
                 </p>
                 <section className="agenda__section-container">
                     {showsDatas.map((show) => {
@@ -47,20 +58,43 @@ export default async function Agenda() {
                                     height={380}
                                     className="agenda__show-hero"
                                 />
-                                <span className="agenda__show-team" style={{backgroundImage: `url(/logo/picto-${show.team}-96x96.png)`}}></span>
+                                <span
+                                    className="agenda__show-team"
+                                    style={{
+                                        backgroundImage: `url(/logo/picto-${show.team}-96x96.png)`,
+                                    }}
+                                ></span>
                                 <div>
-                                    <Link
-                                        className="agenda__show-content"
-                                        href={`/agenda/${show.id}`}
-                                    >
-                                        <h3 className="agenda__show-title">
-                                            {show.title}
-                                        </h3>
-                                        <p className="agenda__show-informations">
-                                            {getFullDateDisplay(show.date)}, {show.startingHour}
-                                        </p>
-                                        <CgChevronRight className="agenda__show-more" />
-                                    </Link>
+                                    {show.team === "micim" ? (
+                                        <Link
+                                            className="agenda__show-content"
+                                            href={`/agenda/${show.id}`}
+                                        >
+                                            <h3 className="agenda__show-title">
+                                                {show.title}
+                                            </h3>
+                                            <p className="agenda__show-informations">
+                                                {getFullDateDisplay(show.date)},{" "}
+                                                {show.startingHour}
+                                            </p>
+                                            <CgChevronRight className="agenda__show-more" />
+                                        </Link>
+                                    ) : (
+                                        <a
+                                            className="agenda__show-content"
+                                            href={`https://www.tipaix.fr/spectacles/${show.link}`}
+                                            target="_blank"
+                                        >
+                                            <h3 className="agenda__show-title">
+                                                {show.title}
+                                            </h3>
+                                            <p className="agenda__show-informations">
+                                                {getFullDateDisplay(show.date)},{" "}
+                                                {show.startingHour}
+                                            </p>
+                                            <CgChevronRight className="agenda__show-more" />
+                                        </a>
+                                    )}
                                 </div>
                             </article>
                         );
