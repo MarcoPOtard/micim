@@ -52,3 +52,22 @@ a {
         color-scheme: dark;
     }
 }
+.text-center {
+    text-align: center;
+}
+.social-network {
+    padding: 1rem;
+}
+.social-network__link {
+    margin: 0 1rem;
+
+    svg {
+        transition: all 0.2s ease;
+    }
+    &:hover {
+        svg {
+            fill: colors.$color-micim-500;
+        }
+    }
+
+}
