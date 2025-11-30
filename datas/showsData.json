@@ -41,14 +41,14 @@
         {
             "id": "4",
             "team": "tipaix",
-            "title": "Match d'impro ado",
+            "title": "Match d'impro face au Toucan",
             "date": "06/12/2025",
             "location": "Espace Ughetti, Route de Gardanne, Luynes, 13080 Aix-en-Provence",
             "city": "Luynes",
             "startingHour": "19h00",
-            "image": "/images/shows/tipaix/spectacle-3.jpeg",
-            "poster": "/images/shows/tipaix/spectacle-3.jpeg",
-            "description": "Un match d'improvisation théâtrale opposant Tipaix à une troupe invitée. Sport et théâtre réunis !",
+            "image": "/images/shows/tipaix/Logo-Toucan.jpeg",
+            "poster": "/images/shows/tipaix/logo-toucan.jpg",
+            "description": "Pour ce match, vous aurez la chance de voir 2 matchs. La tipaix face au Toucan. 2 match à 6 contre 6, équipe débutante puis équipe confirmée. Une belle soirée explosive vous attent. Alors n'hésitez plus et rejoignez-nous. Le Toucan est la ligue d'improvisation de l'Isle sur la Sorgue",
             "link": "2"
         },
         {
