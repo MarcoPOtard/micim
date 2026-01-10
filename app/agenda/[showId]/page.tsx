@@ -135,6 +135,16 @@ export default async function ShowDetails({
     const posterDimensions = getImageDimensions(show.poster);
     const eventData = generateEventStructuredData(show);
 
+    const optsLink: { className?: string; target?: string } = {
+        className: "button-secondary",
+        target: "_blank"
+    };
+
+    if (show.link === "#") {
+        optsLink.className += " btn-disabled";
+        optsLink.target = "";
+    }
+
     return (
         <>
             <StructuredData type="event" data={eventData} />
@@ -169,8 +179,11 @@ export default async function ShowDetails({
                     className="show-description"
                     dangerouslySetInnerHTML={{ __html: sanitizeHtml(show.description) }}
                 />
-                {show.link && (
-                    <Link className="button-secondary" href={show.link} target="_blank" rel="noopener noreferrer">
+                {(show.link) && (
+                    <Link 
+                        href={show.link} 
+                        {...optsLink}
+                        rel="noopener noreferrer">
                         Acheter votre billet
                     </Link>
                 )}

@@ -12,7 +12,8 @@
     border-radius: 0.275rem;
     background-color: colors.$secondary;
 
-    &:disabled {
+    &:disabled,
+    &.btn-disabled {
         opacity: 0.5;
         cursor: not-allowed;
     }
