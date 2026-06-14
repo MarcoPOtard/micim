@@ -115,6 +115,19 @@
             "poster": "/images/shows/micim/2026-02-07-affiche-vierge-w900.png",
             "description": "Que va-t-il se passer lors de ce cabaret musicale improvisé ? Vous ne le savez pas ! Rassurez-vous nous non plus. \n Une chose est sur, il y aura des chansons improvisées et du rire. \n Alors n&lsquo;hésitez plus, venez nous voir.",
             "link": "https://www.helloasso.com/associations/micim/evenements/cabaret-d-impro-de-la-micim"
+        },
+        {
+            "id": "10",
+            "team": "micim",
+            "title": "Le Grand Catch d'Impro de la Micim",
+            "date": "20/06/2026",
+            "location": "Espace Ughetti, Route de Gardanne, Luynes, 13080 Aix-en-Provence",
+            "city": "Luynes",
+            "startingHour": "19h00",
+            "image": "/images/shows/micim/2026-06-20-catch-visuel.png",
+            "poster": "/images/shows/micim/2026-06-20-Catch-affiche.png",
+            "description": "6 ligues d'improvisation s'affrontent dans un grand catch d'improvisation théâtrale en 2V2. Venez découvrir le catch d'impro, un match d'improvisation théâtrale où des équipes de 2 joueurs s'affrontent pour remporter la victoire. \n Alors n&lsquo;hésitez plus, venez nous voir.",
+            "link": "#"
         }
 
     ]
