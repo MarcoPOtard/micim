@@ -128,7 +128,21 @@
             "poster": "/images/shows/micim/2026-06-20-Catch-affiche.png",
             "description": "6 ligues d'improvisation s'affrontent dans un grand catch d'improvisation théâtrale en 2V2. Venez découvrir le catch d'impro, un match d'improvisation théâtrale où des équipes de 2 joueurs s'affrontent pour remporter la victoire. \n Alors n&lsquo;hésitez plus, venez nous voir.",
             "link": "https://www.helloasso.com/associations/micim/evenements/grand-catch-d-impro-de-la-micim"
+        },
+        {
+            "id": "9",
+            "team": "micim",
+            "title": "Cabaret Musicale Improvisée",
+            "date": "20/11/2026",
+            "location": "La Manufacture, 18 Rue Courteissade, 13100 Aix-en-Provence",
+            "city": "Aix-en-Provence",
+            "startingHour": "20h30",
+            "image": "/images/shows/micim/2026-04-25 - site visuel v3.png",
+            "poster": "/images/shows/micim/2026-04-25 - site affiche v3.png",
+            "description": "Alors, que va-t-il se passer lors de cette nouvelle comédie musicale improvisée ? C&lsquo;est vous qui allez décider de nous donner des éléments qui nous permettrons de vous interpréter une nouvelle comédie musicale complétement improvisée complétement folle. \nAlors n&lsquo;hésitez plus, venez nous voir.",
+            "link": "#"
         }
+
 
     ]
 }
