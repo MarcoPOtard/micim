@@ -84,6 +84,7 @@ export default async function Agenda() {
                                             className="agenda__show-content"
                                             href={`https://www.tipaix.fr/spectacles/${show.link}`}
                                             target="_blank"
+                                            rel="noopener noreferrer"
                                         >
                                             <h3 className="agenda__show-title">
                                                 {show.title}

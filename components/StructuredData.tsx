@@ -1,5 +1,3 @@
-'use client'
-
 interface EventData {
   name?: string;
   description?: string;

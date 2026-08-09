@@ -18,102 +18,85 @@ type Props = {
 export async function generateMetadata({
     params,
 }: Props): Promise<Metadata> {
-    try {
-        // read route params
-        const { showId } = await params;
+    // read route params
+    const { showId } = await params;
 
-        const baseUrl =
-            process.env.VERCEL_URL !== undefined
-                ? `https://${process.env.VERCEL_URL}`
-                : "http://localhost:3000";
+    const showsDatas = await showData();
+    const show = showsDatas.find((show) => show.id === showId);
 
-        const res = await fetch(`${baseUrl}/api/shows/${showId}`, {
-            cache: "no-store",
-        });
+    if (!show) {
+        return { title: "Show not found" };
+    }
 
-        if (!res.ok) {
-            console.error(`❌ Failed to fetch show ${showId}:`, res.statusText);
-            return { title: "Show not found" };
-        }
+    // Nettoyer la description HTML pour la meta description
+    const cleanDescription = show.description
+        ? show.description.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ').trim()
+        : "Spectacle de comédie musicale improvisée par la troupe MICIM";
 
-        const show = await res.json();
+    const truncatedDescription = cleanDescription.length > 160
+        ? cleanDescription.substring(0, 157) + "..."
+        : cleanDescription;
 
-        // Nettoyer la description HTML pour la meta description
-        const cleanDescription = show.description 
-            ? show.description.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ').trim()
-            : "Spectacle de comédie musicale improvisée par la troupe MICIM";
-        
-        const truncatedDescription = cleanDescription.length > 160 
-            ? cleanDescription.substring(0, 157) + "..."
-            : cleanDescription;
+    const showUrl = `https://micim.fr/agenda/${showId}`;
+    const imageUrl = show.image ? `https://micim.fr${show.image}` : 'https://micim.fr/images/og-image.jpg';
 
-        const showUrl = `https://micim.fr/agenda/${showId}`;
-        const imageUrl = show.image ? `https://micim.fr${show.image}` : 'https://micim.fr/images/og-image.jpg';
-
-        return {
-            title: show.title,
+    return {
+        title: show.title,
+        description: truncatedDescription,
+        keywords: [
+            show.title,
+            'MICIM',
+            'comédie musicale improvisée',
+            'spectacle',
+            show.city || 'Aix-en-Provence',
+            'théâtre',
+            'improvisation',
+            'événement'
+        ],
+        authors: [{ name: 'MICIM' }],
+        creator: 'MICIM',
+        publisher: 'MICIM',
+        openGraph: {
+            type: 'article',
+            locale: 'fr_FR',
+            url: showUrl,
+            siteName: 'MICIM',
+            title: `${show.title} - MICIM`,
             description: truncatedDescription,
-            keywords: [
-                show.title,
-                'MICIM',
-                'comédie musicale improvisée',
-                'spectacle',
-                show.city || 'Aix-en-Provence',
-                'théâtre',
-                'improvisation',
-                'événement'
-            ],
-            authors: [{ name: 'MICIM' }],
-            creator: 'MICIM',
-            publisher: 'MICIM',
-            openGraph: {
-                type: 'article',
-                locale: 'fr_FR',
-                url: showUrl,
-                siteName: 'MICIM',
-                title: `${show.title} - MICIM`,
-                description: truncatedDescription,
-                images: [{
-                    url: imageUrl,
-                    width: 1200,
-                    height: 630,
-                    alt: show.title,
-                    type: 'image/jpeg'
-                }],
-                publishedTime: new Date().toISOString(),
-                section: 'Spectacles'
-            },
-            twitter: {
-                card: 'summary_large_image',
-                title: `${show.title} - MICIM`,
-                description: truncatedDescription,
-                images: [imageUrl],
-                creator: '@micim'
-            },
-            robots: {
+            images: [{
+                url: imageUrl,
+                width: 1200,
+                height: 630,
+                alt: show.title,
+                type: 'image/jpeg'
+            }],
+            publishedTime: new Date().toISOString(),
+            section: 'Spectacles'
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: `${show.title} - MICIM`,
+            description: truncatedDescription,
+            images: [imageUrl],
+            creator: '@micim'
+        },
+        robots: {
+            index: true,
+            follow: true,
+            nocache: true,
+            googleBot: {
                 index: true,
                 follow: true,
-                nocache: true,
-                googleBot: {
-                    index: true,
-                    follow: true,
-                    noimageindex: true,
-                    "max-video-preview": -1,
-                    "max-image-preview": "large",
-                    "max-snippet": -1,
-                },
+                noimageindex: true,
+                "max-video-preview": -1,
+                "max-image-preview": "large",
+                "max-snippet": -1,
             },
-            alternates: {
-                canonical: showUrl
-            }
-        };
-    } catch (error) {
-        console.error("Error in generateMetadata:", error);
-        return { 
-            title: "Show not found",
-            description: "Le spectacle demandé n'a pas pu être trouvé."
-        };
-    }
+        },
+        alternates: {
+            canonical: showUrl
+        }
+    };
 }
 
 export default async function ShowDetails({
