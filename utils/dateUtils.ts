@@ -1,98 +1,53 @@
-import { Show } from "@/datas/IShowsData";
+// Les événements de la MICIM ont toujours lieu à Aix-en-Provence : on
+// formate systématiquement dans ce fuseau, quel que soit le fuseau du
+// serveur qui exécute le rendu.
+const EVENT_TIME_ZONE = "Europe/Paris";
 
-// Jours de la semaine en français
-const DAYS_FR = [
-    'Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'
-];
-
-// Mois en français
-const MONTHS_FR = [
-    'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-    'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'
-];
-
-/**
- * Parse une date au format DD/MM/YYYY vers un objet Date
- */
-export const parseDate = (dateString: string): Date => {
-    const [day, month, year] = dateString.split('/').map(Number);
-    return new Date(year, month - 1, day); // month - 1 car les mois commencent à 0
-};
-
-/**
- * Génère une date ISO 8601 à partir de la date et de l'heure d'un spectacle
- */
-export const getISODate = (show: Show): string => {
-    const date = parseDate(show.date);
-    
-    // Parser l'heure (format "20h00" -> "20:00")
-    const timeMatch = show.startingHour.match(/(\d{1,2})h(\d{2})/);
-    if (timeMatch) {
-        const [, hours, minutes] = timeMatch;
-        date.setHours(parseInt(hours), parseInt(minutes), 0, 0);
-    }
-    
-    return date.toISOString();
-};
+const capitalize = (text: string): string =>
+    text.charAt(0).toUpperCase() + text.slice(1);
 
 /**
  * Génère l'affichage complet de la date (ex: "Samedi 04 octobre 2025")
  */
-export const getFullDateDisplay = (dateString: string): string => {
-    const date = parseDate(dateString);
-    const dayName = DAYS_FR[date.getDay()];
-    const day = date.getDate().toString().padStart(2, '0');
-    const monthName = MONTHS_FR[date.getMonth()];
-    const year = date.getFullYear();
-    
-    return `${dayName} ${day} ${monthName} ${year}`;
+export const getFullDateDisplay = (isoDateTime: string): string => {
+    const date = new Date(isoDateTime);
+    const formatted = new Intl.DateTimeFormat("fr-FR", {
+        timeZone: EVENT_TIME_ZONE,
+        weekday: "long",
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+    }).format(date);
+
+    return capitalize(formatted);
 };
 
 /**
  * Génère l'affichage court de la date (ex: "Samedi 15 novembre")
  */
-export const getShortDateDisplay = (dateString: string): string => {
-    const date = parseDate(dateString);
-    const dayName = DAYS_FR[date.getDay()];
-    const day = date.getDate();
-    const monthName = MONTHS_FR[date.getMonth()];
-    
-    return `${dayName} ${day} ${monthName}`;
+export const getShortDateDisplay = (isoDateTime: string): string => {
+    const date = new Date(isoDateTime);
+    const formatted = new Intl.DateTimeFormat("fr-FR", {
+        timeZone: EVENT_TIME_ZONE,
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+    }).format(date);
+
+    return capitalize(formatted);
 };
 
 /**
- * Vérifie si un spectacle est dans le futur
+ * Génère l'affichage de l'heure (ex: "20h00")
  */
-export const isShowInFuture = (show: Show): boolean => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    const showDate = parseDate(show.date);
-    showDate.setHours(0, 0, 0, 0);
-    
-    return showDate >= today;
-};
+export const getTimeDisplay = (isoDateTime: string): string => {
+    const date = new Date(isoDateTime);
+    const formatted = new Intl.DateTimeFormat("fr-FR", {
+        timeZone: EVENT_TIME_ZONE,
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+    }).format(date);
 
-/**
- * Compare deux spectacles par date pour le tri
- */
-export const compareShowsByDate = (a: Show, b: Show): number => {
-    const dateA = parseDate(a.date);
-    const dateB = parseDate(b.date);
-    
-    // Ajouter l'heure pour un tri plus précis
-    const timeMatchA = a.startingHour.match(/(\d{1,2})h(\d{2})/);
-    const timeMatchB = b.startingHour.match(/(\d{1,2})h(\d{2})/);
-    
-    if (timeMatchA) {
-        const [, hours, minutes] = timeMatchA;
-        dateA.setHours(parseInt(hours), parseInt(minutes));
-    }
-    
-    if (timeMatchB) {
-        const [, hours, minutes] = timeMatchB;
-        dateB.setHours(parseInt(hours), parseInt(minutes));
-    }
-    
-    return dateA.getTime() - dateB.getTime();
+    return formatted.replace(":", "h");
 };

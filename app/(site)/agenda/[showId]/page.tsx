@@ -1,36 +1,30 @@
-import { Show } from "@/datas/IShowsData";
-import { showData } from "@/utils/dataProcessing";
-import { getFullDateDisplay } from "@/utils/dateUtils";
+import { getFullDateDisplay, getTimeDisplay } from "@/utils/dateUtils";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { sanitizeHtml } from "@/utils/sanitizeHtml";
+import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
-import { getImageDimensions } from "@/utils/imageUtils";
 import { StructuredData } from "@/components/StructuredData";
 import { generateEventStructuredData } from "@/utils/eventUtils";
+import { getShowById } from "@/lib/sanity/queries";
+import { portableTextToPlainText } from "@/lib/sanity/portableText";
 
 type Props = {
     params: Promise<{ showId: string }>;
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export async function generateMetadata({
-    params,
-}: Props): Promise<Metadata> {
-    // read route params
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { showId } = await params;
 
-    const showsDatas = await showData();
-    const show = showsDatas.find((show) => show.id === showId);
+    const show = await getShowById(showId);
 
     if (!show) {
         return { title: "Show not found" };
     }
 
-    // Nettoyer la description HTML pour la meta description
-    const cleanDescription = show.description
-        ? show.description.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ').trim()
+    // Nettoyer la description pour la meta description
+    const cleanDescription = show.description?.length
+        ? portableTextToPlainText(show.description)
         : "Spectacle de comédie musicale improvisée par la troupe MICIM";
 
     const truncatedDescription = cleanDescription.length > 160
@@ -38,7 +32,7 @@ export async function generateMetadata({
         : cleanDescription;
 
     const showUrl = `https://micim.fr/agenda/${showId}`;
-    const imageUrl = show.image ? `https://micim.fr${show.image}` : 'https://micim.fr/images/og-image.jpg';
+    const imageUrl = show.imageUrl ?? 'https://micim.fr/images/og-image.jpg';
 
     return {
         title: show.title,
@@ -68,9 +62,7 @@ export async function generateMetadata({
                 width: 1200,
                 height: 630,
                 alt: show.title,
-                type: 'image/jpeg'
             }],
-            publishedTime: new Date().toISOString(),
             section: 'Spectacles'
         },
         twitter: {
@@ -99,23 +91,14 @@ export async function generateMetadata({
     };
 }
 
-export default async function ShowDetails({
-    params,
-}: {
-    params: Promise<{ showId: string }>;
-}) {
-    const showId = (await params).showId;
-    const showsDatas = await showData();
-    const show: Show | undefined = showsDatas.find(
-        (show) => show.id === showId
-    );
+export default async function ShowDetails({ params }: Props) {
+    const { showId } = await params;
+    const show = await getShowById(showId);
 
     if (!show) {
         notFound();
     }
 
-    const heroDimensions = getImageDimensions(show.image);
-    const posterDimensions = getImageDimensions(show.poster);
     const eventData = generateEventStructuredData(show);
 
     const optsLink: { className?: string; target?: string } = {
@@ -123,7 +106,7 @@ export default async function ShowDetails({
         target: "_blank"
     };
 
-    if (show.link === "#") {
+    if (show.ticketLink === "#") {
         optsLink.className += " btn-disabled";
         optsLink.target = "";
     }
@@ -132,39 +115,42 @@ export default async function ShowDetails({
         <>
             <StructuredData type="event" data={eventData} />
             <div className="show-container">
-            <Image
-                src={show.image}
-                alt={show.title}
-                width={heroDimensions.width}
-                height={heroDimensions.height}
-                className="show-hero"
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 600px"
-                style={{
-                    width: '100%',
-                    height: 'auto',
-                }}
-            />
-            <Image
-                src={show.poster}
-                alt={show.title}
-                width={posterDimensions.width}
-                height={posterDimensions.height}
-                className="show-poster"
-                sizes="(max-width: 1024px) 0px, 50%"
-            />
+            {show.imageUrl && (
+                <Image
+                    src={show.imageUrl}
+                    alt={show.title}
+                    width={show.imageWidth ?? 1200}
+                    height={show.imageHeight ?? 900}
+                    className="show-hero"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 600px"
+                    style={{
+                        width: '100%',
+                        height: 'auto',
+                    }}
+                />
+            )}
+            {show.posterUrl && (
+                <Image
+                    src={show.posterUrl}
+                    alt={show.title}
+                    width={show.posterWidth ?? 900}
+                    height={show.posterHeight ?? 1200}
+                    className="show-poster"
+                    sizes="(max-width: 1024px) 0px, 50%"
+                />
+            )}
 
             <div className="show-content">
-                <h1>{show?.title}</h1>
+                <h1>{show.title}</h1>
                 <p className="show-short-informations">
-                    {getFullDateDisplay(show.date)} | {show.city}
+                    {getFullDateDisplay(show.startDateTime)} | {show.city}
                 </p>
-                <p
-                    className="show-description"
-                    dangerouslySetInnerHTML={{ __html: sanitizeHtml(show.description) }}
-                />
-                {(show.link) && (
-                    <Link 
-                        href={show.link} 
+                <div className="show-description">
+                    <PortableText value={show.description} />
+                </div>
+                {(show.ticketLink) && (
+                    <Link
+                        href={show.ticketLink}
                         {...optsLink}
                         rel="noopener noreferrer">
                         Acheter votre billet
@@ -172,7 +158,7 @@ export default async function ShowDetails({
                 )}
                 <h3>Heure & Lieux</h3>
                 <p className="show-informations">
-                    {getFullDateDisplay(show.date)}, {show.startingHour}
+                    {getFullDateDisplay(show.startDateTime)}, {getTimeDisplay(show.startDateTime)}
                     <br />
                     {show.location}
                 </p>

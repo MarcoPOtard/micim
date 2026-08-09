@@ -1,18 +1,24 @@
 import { Metadata } from "next";
+import { getMentionsLegalesPage } from "@/lib/sanity/queries";
 
-export const metadata: Metadata = {
-    title: "Mentions légales - MICIM",
-    robots: {
-        index: false,
-        follow: false,
-        nocache: false,
-        googleBot: {
+export async function generateMetadata(): Promise<Metadata> {
+    const mentionsLegalesPage = await getMentionsLegalesPage();
+
+    return {
+        title: mentionsLegalesPage?.seo?.metaTitle ?? "Mentions légales - MICIM",
+        description: mentionsLegalesPage?.seo?.metaDescription,
+        robots: {
             index: false,
             follow: false,
-            noimageindex: true,
+            nocache: false,
+            googleBot: {
+                index: false,
+                follow: false,
+                noimageindex: true,
+            },
         },
-    },
-};
+    };
+}
 
 const LegalNotices = () => {
     return (

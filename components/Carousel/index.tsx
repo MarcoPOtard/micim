@@ -4,8 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Link from "next/link";
-import { CarouselData } from "@/datas/ICarouselData";
-import { sanitizeHtml } from "@/utils/sanitizeHtml";
+import type { Slide } from "@/lib/sanity/queries";
 
 const settings = {
     dots: true,
@@ -22,26 +21,28 @@ const settings = {
     pauseOnFocus: true,
 };
 
-export default function Carousel({ sliderData }: { sliderData: CarouselData }) {
+export default function Carousel({ slides }: { slides: Slide[] }) {
     return (
         <Slider {...settings}>
-            {sliderData.sliders.map((data) => {
+            {slides.map((slide) => {
                 return (
-                    <div key={data.title} className="carousel-slider">
+                    <div key={slide.title} className="carousel-slider">
                         <div className="carousel-slider__top">
                             <hr />
-                            <h3>{data.title}</h3>
+                            <h3>{slide.title}</h3>
                         </div>
                         <div className="carousel-slider__bottom">
-                            <h4>{data.subtitle}</h4>
-                            <p dangerouslySetInnerHTML={{__html: sanitizeHtml(data.description)}}/>
-                            <Link
-                                href={data.ctaLink}
-                                className="carousel-slider__cta"
-                                {...(data.ctaLink.startsWith('http') && { target: "_blank", rel: "noopener noreferrer" })}
-                            >
-                                {data.ctaText}
-                            </Link>
+                            <h4>{slide.subtitle}</h4>
+                            <p>{slide.description}</p>
+                            {slide.ctaLink && (
+                                <Link
+                                    href={slide.ctaLink}
+                                    className="carousel-slider__cta"
+                                    {...(slide.ctaLink.startsWith('http') && { target: "_blank", rel: "noopener noreferrer" })}
+                                >
+                                    {slide.ctaText}
+                                </Link>
+                            )}
                         </div>
                     </div>
                 );
