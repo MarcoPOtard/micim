@@ -1,11 +1,11 @@
 import { MetadataRoute } from 'next'
-import { showData } from '@/utils/dataProcessing'
+import { getShows } from '@/lib/sanity/queries'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const shows = await showData()
-  
+  const shows = await getShows()
+
   const showUrls = shows.map((show) => ({
-    url: `https://micim.fr/agenda/${show.id}`,
+    url: `https://micim.fr/agenda/${show._id}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.7,

@@ -8,8 +8,8 @@
     width: 100%;
     min-height: 75vw;
     padding: 5rem 1rem 1rem;
-    background: url("../public/images/troupe-micim.jpeg") no-repeat 0 0
-        transparent;
+    background-repeat: no-repeat;
+    background-position: 0 0;
     background-size: cover;
     filter: brightness(0.7);
 }

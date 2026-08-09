@@ -1,36 +1,39 @@
-import { Show } from "@/datas/IShowsData";
-import { showData } from "@/utils/dataProcessing";
-import { getFullDateDisplay } from "@/utils/dateUtils";
+import { getFullDateDisplay, getTimeDisplay } from "@/utils/dateUtils";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { CgChevronRight } from "react-icons/cg";
+import { getAgendaPage, getShows } from "@/lib/sanity/queries";
 
-export const metadata: Metadata = {
-    title: "Agenda des spectacles",
-    description:
-        "Découvrez tous les prochains spectacles de comédie musicale improvisée de la troupe MICIM. Réservez vos places pour nos représentations à Aix-en-Provence.",
-    keywords: [
-        "agenda spectacles MICIM",
-        "prochaines représentations",
-        "spectacles Aix-en-Provence",
-        "réservation comédie musicale",
-        "calendrier événements",
-    ],
-    openGraph: {
-        title: "Agenda des spectacles MICIM - Prochaines représentations",
+export async function generateMetadata(): Promise<Metadata> {
+    const agendaPage = await getAgendaPage();
+
+    return {
+        title: agendaPage?.seo?.metaTitle ?? "Agenda des spectacles",
         description:
-            "Ne manquez aucun de nos spectacles ! Consultez l'agenda complet de la troupe MICIM et réservez vos places.",
-        images: ["/images/og-image.jpg"],
-    },
-};
+            agendaPage?.seo?.metaDescription ??
+            "Découvrez tous les prochains spectacles de comédie musicale improvisée de la troupe MICIM. Réservez vos places pour nos représentations à Aix-en-Provence.",
+        keywords: [
+            "agenda spectacles MICIM",
+            "prochaines représentations",
+            "spectacles Aix-en-Provence",
+            "réservation comédie musicale",
+            "calendrier événements",
+        ],
+        openGraph: {
+            title: "Agenda des spectacles MICIM - Prochaines représentations",
+            description:
+                "Ne manquez aucun de nos spectacles ! Consultez l'agenda complet de la troupe MICIM et réservez vos places.",
+            images: [agendaPage?.seo?.shareImageUrl ?? "/images/og-image.jpg"],
+        },
+    };
+}
 
 // Revalidate the page every 6 hours
 export const revalidate = 21600;
 
 export default async function Agenda() {
-    const showsDatas: Show[] = await showData();
-    // const shows = displayShows(showsDatas, 0);
+    const showsDatas = await getShows();
 
     return (
         <>
@@ -48,16 +51,18 @@ export default async function Agenda() {
                     {showsDatas.map((show) => {
                         return (
                             <article
-                                key={show.id}
+                                key={show._id}
                                 className="agenda__show-container"
                             >
-                                <Image
-                                    src={show.image}
-                                    alt={show.title}
-                                    width={640}
-                                    height={380}
-                                    className="agenda__show-hero"
-                                />
+                                {show.imageUrl && (
+                                    <Image
+                                        src={show.imageUrl}
+                                        alt={show.title}
+                                        width={640}
+                                        height={380}
+                                        className="agenda__show-hero"
+                                    />
+                                )}
                                 <span
                                     className="agenda__show-team"
                                     style={{
@@ -68,21 +73,20 @@ export default async function Agenda() {
                                     {show.team === "micim" ? (
                                         <Link
                                             className="agenda__show-content"
-                                            href={`/agenda/${show.id}`}
+                                            href={`/agenda/${show._id}`}
                                         >
                                             <h3 className="agenda__show-title">
                                                 {show.title}
                                             </h3>
                                             <p className="agenda__show-informations">
-                                                {getFullDateDisplay(show.date)},{" "}
-                                                {show.startingHour}
+                                                {getFullDateDisplay(show.startDateTime)}, {getTimeDisplay(show.startDateTime)}
                                             </p>
                                             <CgChevronRight className="agenda__show-more" />
                                         </Link>
                                     ) : (
                                         <a
                                             className="agenda__show-content"
-                                            href={`https://www.tipaix.fr/spectacles/${show.link}`}
+                                            href={`https://www.tipaix.fr/spectacles/${show.ticketLink}`}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >
@@ -90,8 +94,7 @@ export default async function Agenda() {
                                                 {show.title}
                                             </h3>
                                             <p className="agenda__show-informations">
-                                                {getFullDateDisplay(show.date)},{" "}
-                                                {show.startingHour}
+                                                {getFullDateDisplay(show.startDateTime)}, {getTimeDisplay(show.startDateTime)}
                                             </p>
                                             <CgChevronRight className="agenda__show-more" />
                                         </a>

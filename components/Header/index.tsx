@@ -6,8 +6,14 @@ import { useState, useEffect } from "react";
 import { CgMenuRight } from "react-icons/cg";
 import { CgClose } from "react-icons/cg";
 import SocialNetwork from "../SocialNetwork";
+import type { NavigationLink, SocialLink } from "@/lib/sanity/queries";
 
-const Header = () => {
+type HeaderProps = {
+    navigationLinks: NavigationLink[];
+    socialLinks: SocialLink[];
+};
+
+const Header = ({ navigationLinks, socialLinks }: HeaderProps) => {
     const [displayMenu, setDisplayMenu] = useState(false);
 
     // Handle escape key to close menu
@@ -72,42 +78,26 @@ const Header = () => {
                         role="menu"
                         aria-hidden={!displayMenu}
                     >
-                        <Link
-                            className="header__menu-navigation__link"
-                            href="/agenda"
-                            onClick={() => setDisplayMenu(false)}
-                            role="menuitem"
-                        >
-                            Agenda
-                        </Link>
-                        <Link
-                            className="header__menu-navigation__link"
-                            href="/association"
-                            onClick={() => setDisplayMenu(false)}
-                            role="menuitem"
-                        >
-                            La Micim
-                        </Link>
-                        <Link
-                            className="header__menu-navigation__link"
-                            href="https://www.tipaix.fr"
-                            onClick={() => setDisplayMenu(false)}
-                            target="_blank"
-                            role="menuitem"
-                            rel="noopener noreferrer"
-                        >
-                            La Tipaix
-                        </Link>
-                        <Link
-                            className="header__menu-navigation__link"
-                            href="/contact"
-                            onClick={() => setDisplayMenu(false)}
-                            role="menuitem"
-                        >
-                            Contact
-                        </Link>
+                        {navigationLinks.map((link) => {
+                            const isExternal = link.href.startsWith("http");
+                            return (
+                                <Link
+                                    key={link.href}
+                                    className="header__menu-navigation__link"
+                                    href={link.href}
+                                    onClick={() => setDisplayMenu(false)}
+                                    role="menuitem"
+                                    {...(isExternal && {
+                                        target: "_blank",
+                                        rel: "noopener noreferrer",
+                                    })}
+                                >
+                                    {link.label}
+                                </Link>
+                            );
+                        })}
 
-                        <SocialNetwork />
+                        <SocialNetwork links={socialLinks} />
 
                     </div>
                 </div>

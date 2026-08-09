@@ -7,21 +7,28 @@
     "dev:clear": "node scripts/clear-cache.js",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "migrate:sanity": "tsx --env-file=.env.local scripts/migrate-to-sanity.ts"
   },
   "dependencies": {
+    "@portabletext/react": "^7.0.1",
+    "@portabletext/types": "^4.0.2",
+    "@sanity/client": "^7.26.2",
+    "@sanity/image-url": "^2.1.1",
+    "@sanity/vision": "^6.9.1",
     "@supabase/supabase-js": "^2.112.2",
-    "@types/dompurify": "^3.0.5",
     "@types/nodemailer": "^8.0.1",
-    "dompurify": "^3.4.13",
     "next": "16.3.0",
+    "next-sanity": "^13.3.1",
     "nodemailer": "^9.0.5",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-hook-form": "^7.85.0",
     "react-icons": "^5.7.0",
     "react-slick": "^0.31.0",
-    "slick-carousel": "^1.8.1"
+    "sanity": "^6.9.1",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^6.5.1"
   },
   "devDependencies": {
     "@types/node": "^26.2.0",
@@ -31,6 +38,7 @@
     "eslint": "^9.39.5",
     "eslint-config-next": "16.3.0",
     "sass": "^1.102.0",
+    "tsx": "^4.23.11",
     "typescript": "^6.0.3"
   }
 }
