@@ -99,7 +99,9 @@ export default async function ShowDetails({ params }: Props) {
         notFound();
     }
 
-    const eventData = generateEventStructuredData(show);
+    const eventData = generateEventStructuredData(show, {
+        fallbackDescription: `Spectacle de comédie musicale improvisée : ${show.title}`,
+    });
 
     const optsLink: { className?: string; target?: string } = {
         className: "button-secondary",

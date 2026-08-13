@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CgChevronRight } from "react-icons/cg";
 import { Metadata } from "next";
-import { getHomePage, getShows, Slide } from "@/lib/sanity/queries";
+import { getHomePage, getShows, getStages, Slide, Show, Stage } from "@/lib/sanity/queries";
 import { urlFor } from "@/lib/sanity/image";
 
 const DEFAULT_SLIDES: Slide[] = [
@@ -27,6 +27,20 @@ const DEFAULT_SLIDES: Slide[] = [
 ];
 
 const DEFAULT_HERO_BACKGROUND = "/images/troupe-micim.jpeg";
+
+type HomeAgendaItem =
+    | { kind: "show"; data: Show }
+    | { kind: "stage"; data: Stage };
+
+const renderHomeAgendaItemContent = (data: Show | Stage) => (
+    <>
+        <h3 className="home-page__show-title">{data.title}</h3>
+        <p className="home-page__show-informations">
+            {getFullDateDisplay(data.startDateTime)}, {getTimeDisplay(data.startDateTime)}
+        </p>
+        <CgChevronRight className="home-page__show-more" />
+    </>
+);
 
 export async function generateMetadata(): Promise<Metadata> {
     const homePage = await getHomePage();
@@ -56,13 +70,34 @@ export async function generateMetadata(): Promise<Metadata> {
 export const revalidate = 21600;
 
 export default async function Home() {
-    const [homePage, shows] = await Promise.all([getHomePage(), getShows()]);
+    const [homePage, shows, stages] = await Promise.all([
+        getHomePage(),
+        getShows(),
+        getStages(),
+    ]);
 
     const slides = homePage?.slides?.length ? homePage.slides : DEFAULT_SLIDES;
     const heroBackgroundUrl = homePage?.heroBackgroundImage
         ? urlFor(homePage.heroBackgroundImage).width(1920).quality(80).auto("format").url()
         : DEFAULT_HERO_BACKGROUND;
-    const micimShows = shows.filter((show) => show.team === "micim").slice(0, 2);
+
+    // shows et stages sont déjà triés par date croissante : on prend donc le
+    // premier de chaque catégorie avant de les remélanger par date.
+    const nextMicimShow = shows.find((show) => show.team === "micim");
+    const nextTipaixShow = shows.find((show) => show.team === "tipaix");
+    const nextStage = stages[0];
+
+    const homeAgendaItems: HomeAgendaItem[] = [
+        nextMicimShow && { kind: "show" as const, data: nextMicimShow },
+        nextTipaixShow && { kind: "show" as const, data: nextTipaixShow },
+        nextStage && { kind: "stage" as const, data: nextStage },
+    ]
+        .filter((item): item is HomeAgendaItem => Boolean(item))
+        .sort(
+            (a, b) =>
+                new Date(a.data.startDateTime).getTime() -
+                new Date(b.data.startDateTime).getTime()
+        );
 
     return (
         <>
@@ -92,39 +127,55 @@ export default async function Home() {
 
             <div className="home-page__next-time__container">
                 <h2 className="home-page__next-time__title">
-                    Nos futurs spectacles
+                    Nos futurs évènements
                 </h2>
 
-                {micimShows.map((show) => (
-                    <article
-                        key={show._id}
-                        className="home-page__show-container"
-                    >
-                        {show.imageUrl && (
-                            <Image
-                                src={show.imageUrl}
-                                alt={show.title}
-                                width={640}
-                                height={380}
-                                className="home-page__show-hero"
-                            />
-                        )}
-                        <div>
-                            <Link
-                                className="home-page__show-content"
-                                href={`/agenda/${show._id}`}
-                            >
-                                <h3 className="home-page__show-title">
-                                    {show.title}
-                                </h3>
-                                <p className="home-page__show-informations">
-                                    {getFullDateDisplay(show.startDateTime)}, {getTimeDisplay(show.startDateTime)}
-                                </p>
-                                <CgChevronRight className="home-page__show-more" />
-                            </Link>
-                        </div>
-                    </article>
-                ))}
+                {homeAgendaItems.map((item) => {
+                    const { data } = item;
+
+                    return (
+                        <article
+                            key={data._id}
+                            className="home-page__show-container"
+                        >
+                            {data.imageUrl && (
+                                <Image
+                                    src={data.imageUrl}
+                                    alt={data.title}
+                                    width={640}
+                                    height={380}
+                                    className="home-page__show-hero"
+                                />
+                            )}
+                            <div>
+                                {item.kind === "stage" ? (
+                                    <Link
+                                        className="home-page__show-content"
+                                        href={`/stages/${data._id}`}
+                                    >
+                                        {renderHomeAgendaItemContent(data)}
+                                    </Link>
+                                ) : item.data.team === "micim" ? (
+                                    <Link
+                                        className="home-page__show-content"
+                                        href={`/agenda/${data._id}`}
+                                    >
+                                        {renderHomeAgendaItemContent(data)}
+                                    </Link>
+                                ) : (
+                                    <a
+                                        className="home-page__show-content"
+                                        href={`https://www.tipaix.fr/spectacles/${item.data.ticketLink}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {renderHomeAgendaItemContent(data)}
+                                    </a>
+                                )}
+                            </div>
+                        </article>
+                    );
+                })}
             </div>
         </>
     );

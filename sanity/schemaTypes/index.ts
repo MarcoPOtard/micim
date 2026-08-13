@@ -11,6 +11,8 @@ import { agendaPage } from "./documents/agendaPage";
 import { contactPage } from "./documents/contactPage";
 import { mentionsLegalesPage } from "./documents/mentionsLegalesPage";
 import { show } from "./documents/show";
+import { stagesPage } from "./documents/stagesPage";
+import { stage } from "./documents/stage";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
     types: [
@@ -25,5 +27,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
         contactPage,
         mentionsLegalesPage,
         show,
+        stagesPage,
+        stage,
     ],
 };

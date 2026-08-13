@@ -9,6 +9,7 @@ export const SINGLETON_TYPES = new Set([
     "agendaPage",
     "contactPage",
     "mentionsLegalesPage",
+    "stagesPage",
 ]);
 
 const singletonListItem = (
@@ -32,6 +33,7 @@ export const structure: StructureResolver = (S) =>
             singletonListItem(S, "agendaPage", "Page Agenda"),
             singletonListItem(S, "contactPage", "Page Contact"),
             singletonListItem(S, "mentionsLegalesPage", "Page Mentions légales"),
+            singletonListItem(S, "stagesPage", "Page Stages"),
             S.divider(),
             S.listItem()
                 .title("Spectacles")
@@ -39,6 +41,16 @@ export const structure: StructureResolver = (S) =>
                 .child(
                     S.documentTypeList("show")
                         .title("Spectacles")
+                        .defaultOrdering([
+                            { field: "startDateTime", direction: "asc" },
+                        ])
+                ),
+            S.listItem()
+                .title("Stages")
+                .id("stage")
+                .child(
+                    S.documentTypeList("stage")
+                        .title("Stages")
                         .defaultOrdering([
                             { field: "startDateTime", direction: "asc" },
                         ])

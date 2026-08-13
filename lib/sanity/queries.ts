@@ -206,3 +206,55 @@ export function getShowById(id: string) {
         ["show"]
     );
 }
+
+export interface Stage {
+    _id: string;
+    title: string;
+    startDateTime: string;
+    imageUrl?: string;
+    imageWidth?: number;
+    imageHeight?: number;
+    description: PortableTextBlock[];
+    ticketLink?: string;
+}
+
+const stageProjection = `{
+    _id,
+    title,
+    startDateTime,
+    "imageUrl": image.asset->url,
+    "imageWidth": image.asset->metadata.dimensions.width,
+    "imageHeight": image.asset->metadata.dimensions.height,
+    description,
+    ticketLink
+}`;
+
+export interface StagesPage {
+    intro?: PortableTextBlock[];
+    seo?: Seo;
+}
+
+export function getStagesPage() {
+    return safeFetch<StagesPage>(
+        groq`*[_id == "stagesPage"][0]{ intro, ${seoProjection} }`,
+        {},
+        ["stagesPage"]
+    );
+}
+
+export async function getStages(): Promise<Stage[]> {
+    const stages = await safeFetch<Stage[]>(
+        groq`*[_type == "stage" && startDateTime >= now()] | order(startDateTime asc) ${stageProjection}`,
+        {},
+        ["stage"]
+    );
+    return stages ?? [];
+}
+
+export function getStageById(id: string) {
+    return safeFetch<Stage | null>(
+        groq`*[_type == "stage" && _id == $id][0] ${stageProjection}`,
+        { id },
+        ["stage"]
+    );
+}

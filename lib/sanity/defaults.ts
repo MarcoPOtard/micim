@@ -5,6 +5,7 @@ import type { NavigationLink, SocialLink } from "./queries";
 // le même menu et les mêmes réseaux sociaux qu'avant l'intégration du CMS.
 export const DEFAULT_NAVIGATION_LINKS: NavigationLink[] = [
     { label: "Agenda", href: "/agenda" },
+    { label: "Stages", href: "/stages" },
     { label: "La Micim", href: "/association" },
     { label: "La Tipaix", href: "https://www.tipaix.fr" },
     { label: "Contact", href: "/contact" },

@@ -1,11 +1,22 @@
 import { MetadataRoute } from 'next'
-import { getShows } from '@/lib/sanity/queries'
+import { getShows, getStages } from '@/lib/sanity/queries'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const shows = await getShows()
+  const [shows, stages] = await Promise.all([getShows(), getStages()])
 
-  const showUrls = shows.map((show) => ({
-    url: `https://micim.fr/agenda/${show._id}`,
+  // Les spectacles de la Tipaix n'ont pas de page dédiée sur le site Micim
+  // (ils renvoient vers tipaix.fr), donc on ne référence que les nôtres.
+  const showUrls = shows
+    .filter((show) => show.team === 'micim')
+    .map((show) => ({
+      url: `https://micim.fr/agenda/${show._id}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    }))
+
+  const stageUrls = stages.map((stage) => ({
+    url: `https://micim.fr/stages/${stage._id}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.7,
@@ -20,6 +31,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: 'https://micim.fr/agenda',
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.8,
+    },
+    {
+      url: 'https://micim.fr/stages',
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.8,
@@ -42,6 +59,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.5,
     },
-    ...showUrls
+    ...showUrls,
+    ...stageUrls
   ]
 }
