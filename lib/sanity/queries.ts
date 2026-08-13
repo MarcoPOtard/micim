@@ -3,6 +3,7 @@ import type { PortableTextBlock } from "@portabletext/types";
 import type { SanityImageSource } from "@sanity/image-url";
 
 import { client, hasSanityConfig } from "./client";
+import { getTipaixShows } from "./tipaix";
 
 // Même cadence de revalidation que le reste du site avant l'intégration
 // Sanity (`export const revalidate = 21600` sur les pages accueil/agenda).
@@ -179,12 +180,23 @@ export function getMentionsLegalesPage() {
 }
 
 export async function getShows(): Promise<Show[]> {
-    const shows = await safeFetch<Show[]>(
-        groq`*[_type == "show" && startDateTime >= now()] | order(startDateTime asc) ${showProjection}`,
-        {},
-        ["show"]
-    );
-    return shows ?? [];
+    const [micimShows, tipaixShows] = await Promise.all([
+        safeFetch<Show[]>(
+            groq`*[_type == "show" && startDateTime >= now()] | order(startDateTime asc) ${showProjection}`,
+            {},
+            ["show"]
+        ),
+        getTipaixShows(),
+    ]);
+
+    const now = Date.now();
+    return [...(micimShows ?? []), ...tipaixShows]
+        .filter((show) => new Date(show.startDateTime).getTime() >= now)
+        .sort(
+            (a, b) =>
+                new Date(a.startDateTime).getTime() -
+                new Date(b.startDateTime).getTime()
+        );
 }
 
 export function getShowById(id: string) {
