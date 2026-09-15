@@ -41,19 +41,33 @@ export default async function Stages() {
     return (
         <>
             <div className="stages-container">
-                <h1>Nos prochains stages</h1>
-                {stagesPage?.intro?.length ? (
-                    <PortableText value={stagesPage.intro} />
-                ) : (
-                    <p>
-                        Vous trouverez, dans cette section, tous{" "}
-                        <strong>
-                            les stages à venir animés par la troupe la Micim
-                        </strong>
-                        . N&lsquo;hésitez pas à revenir ici pour voir les
-                        nouvelles dates proposées.
-                    </p>
-                )}
+                <h1>Les samedis matins de l&apos;impro</h1>
+                <div className="stages-container__colonne">
+                    <div className="stages-container__intro">
+                        {stagesPage?.intro?.length ? (
+                            <PortableText value={stagesPage.intro} />
+                        ) : (
+                            <p>
+                                Vous trouverez, dans cette section, tous{" "}
+                                <strong>
+                                    les stages à venir animés par la troupe la
+                                    Micim
+                                </strong>
+                                . N&lsquo;hésitez pas à revenir ici pour voir
+                                les nouvelles dates proposées.
+                            </p>
+                        )}
+                    </div>
+                    {stagesPage?.imageUrl && (
+                        <Image
+                            src={stagesPage.imageUrl}
+                            alt="Stages d'improvisation MICIM"
+                            width={stagesPage.imageWidth ?? 480}
+                            height={stagesPage.imageHeight ?? 720}
+                            className="stages-container__image"
+                        />
+                    )}
+                </div>
                 <section className="stages__section-container">
                     {stagesData.map((stage) => {
                         return (

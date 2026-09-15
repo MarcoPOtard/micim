@@ -231,12 +231,21 @@ const stageProjection = `{
 
 export interface StagesPage {
     intro?: PortableTextBlock[];
+    imageUrl?: string;
+    imageWidth?: number;
+    imageHeight?: number;
     seo?: Seo;
 }
 
 export function getStagesPage() {
     return safeFetch<StagesPage>(
-        groq`*[_id == "stagesPage"][0]{ intro, ${seoProjection} }`,
+        groq`*[_id == "stagesPage"][0]{
+            intro,
+            "imageUrl": image.asset->url,
+            "imageWidth": image.asset->metadata.dimensions.width,
+            "imageHeight": image.asset->metadata.dimensions.height,
+            ${seoProjection}
+        }`,
         {},
         ["stagesPage"]
     );

@@ -24,6 +24,12 @@ export const stagesPage = defineType({
             ],
         }),
         defineField({
+            name: "image",
+            title: "Photo (affichée à droite du texte de présentation)",
+            type: "image",
+            options: { hotspot: true },
+        }),
+        defineField({
             name: "seo",
             title: "SEO",
             type: "seo",
