@@ -6,17 +6,17 @@ import { PortableText } from "@portabletext/react";
 import { notFound } from "next/navigation";
 import { StructuredData } from "@/components/StructuredData";
 import { generateEventStructuredData } from "@/utils/eventUtils";
-import { getStageById } from "@/lib/sanity/queries";
+import { getStageBySlug } from "@/lib/sanity/queries";
 import { portableTextToPlainText } from "@/lib/sanity/portableText";
 
 type Props = {
-    params: Promise<{ stageId: string }>;
+    params: Promise<{ stageSlug: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { stageId } = await params;
+    const { stageSlug } = await params;
 
-    const stage = await getStageById(stageId);
+    const stage = await getStageBySlug(stageSlug);
 
     if (!stage) {
         return { title: "Stage introuvable" };
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         ? cleanDescription.substring(0, 157) + "..."
         : cleanDescription;
 
-    const stageUrl = `https://micim.fr/stages/${stageId}`;
+    const stageUrl = `https://micim.fr/stages/${stageSlug}`;
     const imageUrl = stage.imageUrl ?? 'https://micim.fr/images/og-image.jpg';
 
     return {
@@ -90,8 +90,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function StageDetails({ params }: Props) {
-    const { stageId } = await params;
-    const stage = await getStageById(stageId);
+    const { stageSlug } = await params;
+    const stage = await getStageBySlug(stageSlug);
 
     if (!stage) {
         notFound();

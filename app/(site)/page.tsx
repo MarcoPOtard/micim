@@ -151,7 +151,7 @@ export default async function Home() {
                                 {item.kind === "stage" ? (
                                     <Link
                                         className="home-page__show-content"
-                                        href={`/stages/${data._id}`}
+                                        href={`/stages/${item.data.slug}`}
                                     >
                                         {renderHomeAgendaItemContent(data)}
                                     </Link>

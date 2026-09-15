@@ -16,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
 
   const stageUrls = stages.map((stage) => ({
-    url: `https://micim.fr/stages/${stage._id}`,
+    url: `https://micim.fr/stages/${stage.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.7,

@@ -12,6 +12,27 @@ export const stage = defineType({
             validation: (rule) => rule.required(),
         }),
         defineField({
+            name: "slug",
+            title: "URL du stage",
+            description:
+                "Utilisée dans l'adresse de la page du stage (ex. /stages/mon-titre). Générée à partir du titre via le bouton \"Generate\", puis modifiable.",
+            type: "slug",
+            options: {
+                source: "title",
+                maxLength: 96,
+                slugify: (input: string) =>
+                    input
+                        .normalize("NFD")
+                        .replace(/[̀-ͯ]/g, "")
+                        .toLowerCase()
+                        .trim()
+                        .replace(/[^a-z0-9]+/g, "-")
+                        .replace(/^-+|-+$/g, "")
+                        .slice(0, 96),
+            },
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
             name: "startDateTime",
             title: "Date et heure",
             type: "datetime",

@@ -210,6 +210,7 @@ export function getShowById(id: string) {
 export interface Stage {
     _id: string;
     title: string;
+    slug: string;
     startDateTime: string;
     imageUrl?: string;
     imageWidth?: number;
@@ -221,6 +222,7 @@ export interface Stage {
 const stageProjection = `{
     _id,
     title,
+    "slug": slug.current,
     startDateTime,
     "imageUrl": image.asset->url,
     "imageWidth": image.asset->metadata.dimensions.width,
@@ -260,10 +262,10 @@ export async function getStages(): Promise<Stage[]> {
     return stages ?? [];
 }
 
-export function getStageById(id: string) {
+export function getStageBySlug(slug: string) {
     return safeFetch<Stage | null>(
-        groq`*[_type == "stage" && _id == $id][0] ${stageProjection}`,
-        { id },
+        groq`*[_type == "stage" && slug.current == $slug][0] ${stageProjection}`,
+        { slug },
         ["stage"]
     );
 }

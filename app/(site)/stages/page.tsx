@@ -86,7 +86,7 @@ export default async function Stages() {
                                 )}
                                 <Link
                                     className="stages__stage-content"
-                                    href={`/stages/${stage._id}`}
+                                    href={`/stages/${stage.slug}`}
                                 >
                                     <h3 className="stages__stage-title">
                                         {stage.title}

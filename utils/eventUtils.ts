@@ -3,6 +3,7 @@ import { portableTextToPlainText } from "@/lib/sanity/portableText";
 
 interface EventLike {
     _id: string;
+    slug?: string;
     title: string;
     startDateTime: string;
     location?: string;
@@ -34,7 +35,7 @@ export const generateEventStructuredData = (
         locationAddress: item.location || '',
         city: item.city || 'Aix-en-Provence',
         image: item.imageUrl || 'https://micim.fr/images/og-image.jpg',
-        url: `https://micim.fr/${basePath}/${item._id}`,
+        url: `https://micim.fr/${basePath}/${item.slug ?? item._id}`,
         offers: item.ticketLink && item.ticketLink !== '#' ? {
             url: item.ticketLink
         } : undefined
