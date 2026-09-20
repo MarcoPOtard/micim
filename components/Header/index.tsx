@@ -74,7 +74,7 @@ const Header = ({ navigationLinks, socialLinks }: HeaderProps) => {
                     <div
                         id="mobile-menu"
                         data-menu-display={displayMenu}
-                        className="header__menu-navigation-container"
+                        className="header__menu-navigation-container text-center"
                         role="menu"
                         aria-hidden={!displayMenu}
                     >
