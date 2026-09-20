@@ -14,6 +14,6 @@ export const client = createClient({
     projectId: projectId || "not-configured",
     dataset,
     apiVersion,
-    useCdn: true,
+    useCdn: false,
     perspective: "published",
 });
