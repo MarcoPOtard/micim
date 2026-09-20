@@ -82,22 +82,17 @@ export default async function Home() {
         : DEFAULT_HERO_BACKGROUND;
 
     // shows et stages sont déjà triés par date croissante : on prend donc le
-    // premier de chaque catégorie avant de les remélanger par date.
+    // premier de chaque catégorie.
     const nextMicimShow = shows.find((show) => show.team === "micim");
     const nextTipaixShow = shows.find((show) => show.team === "tipaix");
     const nextStage = stages[0];
 
+    // Ordre imposé : stage, puis spectacle Tipaix, puis spectacle Micim.
     const homeAgendaItems: HomeAgendaItem[] = [
-        nextMicimShow && { kind: "show" as const, data: nextMicimShow },
-        nextTipaixShow && { kind: "show" as const, data: nextTipaixShow },
         nextStage && { kind: "stage" as const, data: nextStage },
-    ]
-        .filter((item): item is HomeAgendaItem => Boolean(item))
-        .sort(
-            (a, b) =>
-                new Date(a.data.startDateTime).getTime() -
-                new Date(b.data.startDateTime).getTime()
-        );
+        nextTipaixShow && { kind: "show" as const, data: nextTipaixShow },
+        nextMicimShow && { kind: "show" as const, data: nextMicimShow },
+    ].filter((item): item is HomeAgendaItem => Boolean(item));
 
     return (
         <>
