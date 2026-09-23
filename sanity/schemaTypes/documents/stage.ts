@@ -33,10 +33,31 @@ export const stage = defineType({
             validation: (rule) => rule.required(),
         }),
         defineField({
-            name: "startDateTime",
-            title: "Date et heure",
-            type: "datetime",
+            name: "date",
+            title: "Date",
+            type: "date",
+            options: { dateFormat: "DD/MM/YYYY" },
             validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "startTime",
+            title: "Heure de début",
+            description: "Format 24h, ex. 08:30",
+            type: "string",
+            validation: (rule) =>
+                rule
+                    .required()
+                    .regex(/^([01]\d|2[0-3]):[0-5]\d$/, { name: "heure (HH:mm)" }),
+        }),
+        defineField({
+            name: "endTime",
+            title: "Heure de fin",
+            description: "Format 24h, ex. 12:30",
+            type: "string",
+            validation: (rule) =>
+                rule
+                    .required()
+                    .regex(/^([01]\d|2[0-3]):[0-5]\d$/, { name: "heure (HH:mm)" }),
         }),
         defineField({
             name: "image",
@@ -74,15 +95,20 @@ export const stage = defineType({
         {
             title: "Date (croissant)",
             name: "startDateTimeAsc",
-            by: [{ field: "startDateTime", direction: "asc" }],
+            by: [
+                { field: "date", direction: "asc" },
+                { field: "startTime", direction: "asc" },
+            ],
         },
     ],
     preview: {
-        select: { title: "title", subtitle: "startDateTime", media: "image" },
-        prepare: ({ title, subtitle, media }) => ({
+        select: { title: "title", date: "date", startTime: "startTime", media: "image" },
+        prepare: ({ title, date, startTime, media }) => ({
             title,
-            subtitle: subtitle
-                ? new Date(subtitle).toLocaleDateString("fr-FR")
+            subtitle: date
+                ? [new Date(date).toLocaleDateString("fr-FR"), startTime]
+                      .filter(Boolean)
+                      .join(" ")
                 : undefined,
             media,
         }),

@@ -52,7 +52,8 @@ export const structure: StructureResolver = (S) =>
                     S.documentTypeList("stage")
                         .title("Stages")
                         .defaultOrdering([
-                            { field: "startDateTime", direction: "asc" },
+                            { field: "date", direction: "asc" },
+                            { field: "startTime", direction: "asc" },
                         ])
                 ),
         ]);

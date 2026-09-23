@@ -1,4 +1,4 @@
-import { getFullDateDisplay, getTimeDisplay } from "@/utils/dateUtils";
+import { getFullDateDisplay, getStageScheduleDisplay } from "@/utils/dateUtils";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -130,7 +130,7 @@ export default async function StageDetails({ params }: Props) {
             <div className="stage-content">
                 <h1>{stage.title}</h1>
                 <p className="stage-short-informations">
-                    {getFullDateDisplay(stage.startDateTime)}
+                    {getFullDateDisplay(stage.date)}
                 </p>
                 <div className="stage-description">
                     <PortableText value={stage.description} />
@@ -145,7 +145,7 @@ export default async function StageDetails({ params }: Props) {
                 )}
                 <h3>Heure et lieu</h3>
                 <p className="stage-informations">
-                    {getFullDateDisplay(stage.startDateTime)}, {getTimeDisplay(stage.startDateTime)}
+                    {getStageScheduleDisplay(stage.date, stage.startTime, stage.endTime)}
                     <br />
                     Salle sous la mairie annexe de Luynes
                    <br />

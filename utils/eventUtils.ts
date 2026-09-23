@@ -6,6 +6,7 @@ interface EventLike {
     slug?: string;
     title: string;
     startDateTime: string;
+    endDateTime?: string;
     location?: string;
     city?: string;
     imageUrl?: string;
@@ -20,7 +21,9 @@ export const generateEventStructuredData = (
 ) => {
     const basePath = options?.basePath ?? "agenda";
     const startDateTime = item.startDateTime;
-    const endDateTime = new Date(new Date(startDateTime).getTime() + 2 * 60 * 60 * 1000).toISOString(); // +2h par défaut
+    const endDateTime =
+        item.endDateTime ??
+        new Date(new Date(startDateTime).getTime() + 2 * 60 * 60 * 1000).toISOString(); // +2h par défaut
 
     const cleanDescription = item.description?.length
         ? portableTextToPlainText(item.description)

@@ -4,6 +4,7 @@ import type { SanityImageSource } from "@sanity/image-url";
 
 import { client, hasSanityConfig } from "./client";
 import { getTipaixShows } from "./tipaix";
+import { buildParisDateTimeISO } from "@/utils/dateUtils";
 
 // Même cadence de revalidation que le reste du site avant l'intégration
 // Sanity (`export const revalidate = 21600` sur les pages accueil/agenda).
@@ -211,7 +212,13 @@ export interface Stage {
     _id: string;
     title: string;
     slug: string;
+    date: string;
+    startTime: string;
+    endTime: string;
+    // Calculés à partir de date/startTime/endTime pour rester compatibles
+    // avec l'affichage partagé avec les spectacles (Show).
     startDateTime: string;
+    endDateTime: string;
     imageUrl?: string;
     imageWidth?: number;
     imageHeight?: number;
@@ -219,17 +226,27 @@ export interface Stage {
     ticketLink?: string;
 }
 
+type RawStage = Omit<Stage, "startDateTime" | "endDateTime">;
+
 const stageProjection = `{
     _id,
     title,
     "slug": slug.current,
-    startDateTime,
+    date,
+    startTime,
+    endTime,
     "imageUrl": image.asset->url,
     "imageWidth": image.asset->metadata.dimensions.width,
     "imageHeight": image.asset->metadata.dimensions.height,
     description,
     ticketLink
 }`;
+
+const withComputedDateTimes = (stage: RawStage): Stage => ({
+    ...stage,
+    startDateTime: buildParisDateTimeISO(stage.date, stage.startTime),
+    endDateTime: buildParisDateTimeISO(stage.date, stage.endTime),
+});
 
 export interface StagesPage {
     intro?: PortableTextBlock[];
@@ -254,18 +271,19 @@ export function getStagesPage() {
 }
 
 export async function getStages(): Promise<Stage[]> {
-    const stages = await safeFetch<Stage[]>(
-        groq`*[_type == "stage" && startDateTime >= now()] | order(startDateTime asc) ${stageProjection}`,
+    const stages = await safeFetch<RawStage[]>(
+        groq`*[_type == "stage" && date >= string::split(now(), "T")[0]] | order(date asc, startTime asc) ${stageProjection}`,
         {},
         ["stage"]
     );
-    return stages ?? [];
+    return (stages ?? []).map(withComputedDateTimes);
 }
 
-export function getStageBySlug(slug: string) {
-    return safeFetch<Stage | null>(
+export async function getStageBySlug(slug: string): Promise<Stage | null> {
+    const stage = await safeFetch<RawStage | null>(
         groq`*[_type == "stage" && slug.current == $slug][0] ${stageProjection}`,
         { slug },
         ["stage"]
     );
+    return stage ? withComputedDateTimes(stage) : null;
 }
